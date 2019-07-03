@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="@string/join_success_message"
+        app:srcCompat="@drawable/ic_join_success" />
+
+    <TextView
+        style="@style/TextStyle33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/join_success_message" />
+
+    <TextView
+        style="@style/TextStyle33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/new_trip" />
+
+    <Button
+        android:id="@+id/join_success_share"
+        style="@style/TextStyle7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="24dp"
+        android:background="@color/lightish_blue"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:text="@string/share_via_whatsapp"
+        android:textAllCaps="false" />
+
+</LinearLayout>

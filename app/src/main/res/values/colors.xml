@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#507dff</color>
+    <color name="colorPrimaryDark">#527eff</color>
+    <color name="colorAccent">#507dff</color>
+    <color name="colorAccent2">#4f4f4f</color>
+    <color name="red">#F44336</color>
+
+    <color name="shimmer_background">#dddddd</color>
+    <color name="bg_select_cab_pressed">#1A507dff</color>
+    <color name="divider">#80989898</color>
+
+    <color name="lightish_blue">#507dff</color>
+    <color name="greyish_brown">#4f4f4f</color>
+    <color name="white">#ffffff</color>
+    <color name="lightish_blue_two">#527eff</color>
+    <color name="lavender_pink">#cd90e1</color>
+    <color name="lightish_blue_three">#4977fe</color>
+    <color name="black">#000000</color>
+    <color name="white_two">#eeeeee</color>
+    <color name="white_three">#fafafa</color>
+    <color name="warm_grey_31">#4e989898</color>
+    <color name="lightish_blue_40">#65507dff</color>
+    <color name="black_19">#2f000000</color>
+    <color name="warm_grey">#989898</color>
+    <color name="lightish_blue_58">#94507dff</color>
+    <color name="grapefruit">#ff4c4c</color>
+    <color name="yellow_orange">#edaf02</color>
+</resources>

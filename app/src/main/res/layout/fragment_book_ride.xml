@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        app:cardElevation="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/TextStyle17"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/select_college" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/book_ride_college"
+                    style="@style/TextStyle15"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/border_text_view"
+                    android:cursorVisible="false"
+                    android:drawableStart="@drawable/ic_college"
+                    android:drawableEnd="@drawable/ic_expand"
+                    android:drawablePadding="12dp"
+                    android:inputType="textAutoComplete|text"
+                    android:padding="16dp"
+                    tools:ignore="LabelFor"
+                    tools:text="VIT Vellore" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        app:cardElevation="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/TextStyle17"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/select_pickup" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/book_ride_pickup"
+                    style="@style/TextStyle15"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/border_text_view"
+                    android:cursorVisible="false"
+                    android:drawableStart="@drawable/ic_pickup"
+                    android:drawableEnd="@drawable/ic_expand"
+                    android:drawablePadding="12dp"
+                    android:inputType="textAutoComplete|text"
+                    android:padding="16dp"
+                    android:singleLine="true"
+                    tools:ignore="LabelFor"
+                    tools:text="Mens Hostel" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextStyle17"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:paddingTop="4dp"
+                        android:text="@string/select_drop" />
+
+                    <ImageButton
+                        android:id="@+id/book_ride_swap_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:contentDescription="@string/swap_location"
+                        android:src="@drawable/ic_swap" />
+
+                </LinearLayout>
+
+                <AutoCompleteTextView
+                    android:id="@+id/book_ride_drop"
+                    style="@style/TextStyle15"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/border_text_view"
+                    android:cursorVisible="false"
+                    android:drawableStart="@drawable/ic_drop"
+                    android:drawableEnd="@drawable/ic_expand"
+                    android:drawablePadding="12dp"
+                    android:inputType="textAutoComplete|text"
+                    android:padding="16dp"
+                    android:singleLine="true"
+                    tools:ignore="LabelFor"
+                    tools:text="Bengaluru Airport" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    tools:ignore="NestedWeights">
+
+                    <TextView
+                        style="@style/TextStyle17"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/date" />
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/book_ride_date"
+                        style="@style/TextStyle15"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1.5"
+                        android:background="@color/white"
+                        android:cursorVisible="false"
+                        android:drawableStart="@drawable/ic_date"
+                        android:drawablePadding="12dp"
+                        android:focusable="false"
+                        android:inputType="date"
+                        android:longClickable="false"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:singleLine="true"
+                        tools:text="Tue, Jun 4" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextStyle17"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="@string/time" />
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/book_ride_time"
+                        style="@style/TextStyle15"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1.5"
+                        android:background="@color/white"
+                        android:cursorVisible="false"
+                        android:drawableStart="@drawable/ic_time"
+                        android:drawablePadding="12dp"
+                        android:focusable="false"
+                        android:inputType="time"
+                        android:longClickable="false"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:singleLine="true"
+                        tools:text="12:46 AM" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/TextStyle15"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_seats"
+                    android:drawablePadding="12dp"
+                    android:text="@string/seats" />
+
+                <SeekBar
+                    android:id="@+id/book_ride_seek_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:progress="100" />
+
+                <TextView
+                    android:id="@+id/book_ride_seats"
+                    style="@style/TextStyle19"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="0.2"
+                    tools:text="4" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <Button
+        android:id="@+id/book_ride_select"
+        style="@style/TextStyle7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/select_cab"
+        android:textAllCaps="false" />
+
+</LinearLayout>

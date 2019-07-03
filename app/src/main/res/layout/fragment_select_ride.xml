@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    app:behavior_hideable="true"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <LinearLayout
+        android:id="@+id/select_ride_collapsed_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginStart="24dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextStyle21"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/select_ride"
+                android:textSize="18sp" />
+
+            <TextView
+                style="@style/TextStyle11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/swipe_up_to_see_more" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/select_ride_collapsed_close"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_close"
+            tools:ignore="ContentDescription" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/select_ride_expanded_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_below="@+id/select_ride_collapsed_action_bar"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/select_ride_pickup"
+                style="@style/TextStyle21"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toStartOf="@+id/select_ride_path"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                tools:ignore="RelativeOverlap"
+                tools:text="IIT Kharagpur" />
+
+            <ImageView
+                android:id="@+id/select_ride_path"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                app:srcCompat="@drawable/ic_path"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/select_ride_drop"
+                style="@style/TextStyle21"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@+id/select_ride_path"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                tools:text="Kolkata Airport" />
+
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/select_ride_expanded_close"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/close"
+            app:srcCompat="@drawable/ic_close" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/select_ride_note"
+        style="@style/TextStyle30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/select_ride_expanded_action_bar"
+        android:background="@color/lightish_blue"
+        android:paddingStart="16dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:text="@string/select_ride_note"
+        tools:ignore="RtlSymmetry" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/select_ride_shimmer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/select_ride_note"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        shimmer:duration="800">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_select_shimmer" />
+
+            <include layout="@layout/layout_select_shimmer" />
+
+            <include layout="@layout/layout_select_shimmer" />
+
+            <include layout="@layout/layout_select_shimmer" />
+
+            <include layout="@layout/layout_select_shimmer" />
+
+            <include layout="@layout/layout_select_shimmer" />
+
+            <include layout="@layout/layout_select_shimmer" />
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/select_ride_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/select_ride_note"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/select_ride_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbars="vertical"
+            android:scrollingCache="true" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/select_ride_empty_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/select_ride_empty_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/no_cabs_available_now"
+            app:srcCompat="@drawable/ic_empty_select" />
+
+        <TextView
+            android:id="@+id/select_ride_empty_message1"
+            style="@style/TextStyle16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/select_ride_empty_image"
+            android:layout_marginTop="40dp"
+            android:text="@string/no_rides_available_now" />
+
+        <TextView
+            android:id="@+id/select_ride_empty_message2"
+            style="@style/TextStyle8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/select_ride_empty_message1"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="16dp"
+            android:text="@string/please_check_after_sometime" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/select_ride_button"
+        style="@style/TextStyle7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:text="@string/request_to_join"
+        android:textAllCaps="false"
+        android:visibility="gone" />
+
+</RelativeLayout>

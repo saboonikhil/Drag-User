@@ -1,0 +1,151 @@
+<resources>
+
+    <string name="app_name">Drag</string>
+    <string name="cherish_the_journey">CHERISH THE JOURNEY</string>
+
+    <!-- Strings related to Login -->
+    <string name="log_in">Log In</string>
+    <string name="welcome_back">Welcome back,</string>
+    <string name="log_in_to_continue">Log in to continue</string>
+    <string name="email">Email</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="password">Password</string>
+
+    <!-- Strings related to Sign Up -->
+    <string name="welcome_to_drag">Welcome to Drag</string>
+    <string name="name">Name</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="do_not_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="create_account">Create Account</string>
+    <string name="terms_of_usage_text">By creating an account, you agree to our Terms &amp; Conditions and Privacy Policy</string>
+
+    <!-- Strings related to Internet Connectivity -->
+    <string name="no_connection">No Connection</string>
+    <string name="check_your_internet">Please check your internet connection and try again</string>
+    <string name="try_again">Try Again</string>
+    <string name="click_here">Click here to check your internet settings</string>
+
+    <!-- Strings related to Main -->
+    <string name="book_ride">Book Ride</string>
+    <string name="profile">Profile</string>
+    <string name="trips">Trips</string>
+    <string name="account">Account</string>
+
+    <!-- Strings related to Notifications -->
+    <string name="notifications">Notifications</string>
+
+    <!-- Strings related to Book Ride -->
+    <string name="select_college">Select College</string>
+    <string name="select_pickup">Select Pickup</string>
+    <string name="select_drop">Select Drop</string>
+    <string name="swap_location">Swap Location</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="seats">Seats</string>
+
+    <!-- Strings related to Select Ride -->
+    <string name="select_ride">Select Ride</string>
+    <string name="select_ride_note">Note: Fare will vary as seats get filled</string>
+    <string name="request_to_join">Request To Join</string>
+    <string name="swipe_up_to_see_more">Swipe up to see more</string>
+    <string name="sedan">Sedan</string>
+    <string name="no_rides_available_now">No Rides Available Now !</string>
+    <string name="close">Close</string>
+    <string name="select_ride_rules">\u00201. The selected ride will be active for 72 hours before its start time.\n\n
+        2. You can\'t join another ride until this ride is confirmed.\n\n
+        3. Fare will be divided according to the number of seats you select.\n\n
+        4. Your share of fare will be known to you before allocating the cab.\n\n
+        5. Cab will be allocated only after tele-verification of your booking.\n\n
+        6. You can track status of your booking in the Trips section of the app.</string>
+    <string name="request_message">Can\'t find the right ride? \n Request one</string>
+    <string name="join_success_message">Your ride joining request is successful.</string>
+    <string name="share_via_whatsapp">Share via Whatsapp</string>
+
+    <!-- Strings related to Select Cab -->
+    <string name="select_cab">Select Cab</string>
+    <string name="no_cabs_available_now">No Cabs Available Now !</string>
+    <string name="please_check_after_sometime">Please check after some time.</string>
+
+    <!-- Strings related to Confirm Ride -->
+    <string name="confirm_ride">Confirm Ride</string>
+    <string name="fare">Fare</string>
+    <string name="cab_details">Cab Details</string>
+    <string name="your_details">Your Details</string>
+    <string name="college_name">College Name</string>
+    <string name="your_name">Your Name</string>
+    <string name="pickup">Pickup</string>
+    <string name="drop">Drop</string>
+    <string name="make_payment">Make Payment</string>
+
+    <!-- Strings related to Payment -->
+    <string name="taking_you_to_payment_gateway">Taking You To Payment Gateway &#8230;</string>
+    <string name="payment_successful_">Payment Successful !</string>
+    <string name="thanks_for_making_payment">Thanks for making payment.</string>
+    <string name="new_trip">A new trip has been added to your account.</string>
+    <string name="sorry_payment_failed_">Sorry, Your Payment Failed !</string>
+    <string name="in_case_of_query_please">In case of any queries, please</string>
+    <string name="contact_our_help_desk">contact our help desk at +91 7010823612</string>
+    <string name="help_desk_">Help Desk</string>
+    <string name="payment_in_process_">Payment In Process !</string>
+    <string name="your_payment_is_in_progress">Your payment is in progress.</string>
+
+    <!-- Strings related to Trips -->
+    <string name="no_trips_available">No Trips Available !</string>
+    <string name="booking_id_">Booking ID:</string>
+    <string name="payment_successful">Payment Successful</string>
+    <string name="payment_in_process">Payment In Process</string>
+    <string name="payment_failed">Payment Failed</string>
+    <string name="trip_cancelled">Trip Cancelled</string>
+
+    <!-- Strings related to Trip details -->
+    <string name="driver_info">Driver Info</string>
+    <string name="cab_info">Cab Info</string>
+    <string name="location_info">Location Info</string>
+    <string name="booking_status">Booking Status</string>
+    <string name="no_of_seats">No of Seats</string>
+    <string name="pickup_">Pickup:</string>
+    <string name="drop_">Drop:</string>
+    <string name="booking_id">Booking ID</string>
+
+    <!-- Strings related to Account -->
+    <string name="help">Help</string>
+    <string name="logout">Logout</string>
+    <string name="terms_and_services">Terms &amp; Services</string>
+    <string name="payment">Payment</string>
+
+    <!-- Strings related to Profile -->
+    <string name="my_profile">My Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="save_profile">Save Profile</string>
+    <string name="alternate_number">Alternate Number</string>
+    <string name="asterisks">********</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+
+    <!-- Strings related to Help -->
+    <string name="any_queries_whatsapp">Any Queries, Whatsapp Us</string>
+    <string name="your_feedback">Your Feedback</string>
+    <string name="send">Send</string>
+    <string name="call">Call</string>
+    <string name="help_desk">+91 7010823612</string>
+
+    <!-- Strings related to Faqs -->
+    <string name="faqs_question_1">How much in advance can I book a ride?</string>
+    <string name="faqs_answer_1">Depending on your travel date/time, you can book a ride up to 30 days in advance. The driver details for your ride will be sent 6 hours prior to your pickup time.</string>
+    <string name="faqs_question_2">Additional fees &amp; charges applicable on the ride?</string>
+    <string name="faqs_answer_2">The total estimated cost for your trip indicates the fare for kilometres travelled, duration of the ride, driver allowance and taxes (as applicable).\n\n
+            Note - State taxes, Permits, Tolls or Parking Fee (if applicable) are included in your bill.</string>
+    <string name="faqs_question_3">How do I leave a rating?</string>
+    <string name="faqs_answer_3">You can leave a rating 24 hours after the ride from your Profile.\n\n
+            First time leaving a rating? Here are a couple of tips:\n
+            - Choose whether the person you’re rating was the driver or passenger.\n
+            - Select the adjective that best describes your experience.\n
+            - Add a few personal words about the person’s promptness or music taste.\n\n
+            If you want to share something that didn’t go well, just try and be as objective as possible. And, if it’s something you feel uncomfortable writing in a rating, you can always contact us.</string>
+    <string name="faqs_question_4">Can I edit or delete a rating that I’ve left?</string>
+    <string name="faqs_answer_4">You can’t edit or delete a rating that you’ve left. Your first impression of your experience travelling with a member is the most accurate. Not how you feel after seeing the rating this person left you.</string>
+
+</resources>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/payment_failed_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/close"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            app:srcCompat="@drawable/ic_back_blue" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/payment_failed_message1"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/payment_failed"
+        app:srcCompat="@drawable/ic_payment_failed" />
+
+    <TextView
+        android:id="@+id/payment_failed_message1"
+        style="@style/TextStyle16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/payment_failed_message2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:text="@string/sorry_payment_failed_" />
+
+    <TextView
+        android:id="@+id/payment_failed_message2"
+        style="@style/TextStyle8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/in_case_of_query_please" />
+
+    <TextView
+        android:id="@+id/payment_failed_message3"
+        style="@style/TextStyle8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/payment_failed_message2"
+        android:layout_centerInParent="true"
+        android:text="@string/contact_our_help_desk" />
+
+    <!--<Button
+        android:id="@+id/payment_failed_button"
+        style="@style/TextStyle7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/payment_failed_message3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:background="@color/colorPrimary"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="@string/help_desk_"
+        android:textAllCaps="false" />-->
+
+</RelativeLayout>
