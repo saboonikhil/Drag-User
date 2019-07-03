@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     app:behavior_hideable="true"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
@@ -209,8 +210,24 @@
 
     </RelativeLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/select_ride_request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:tint="@android:color/white"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="normal"
+        app:rippleColor="@android:color/white"
+        app:srcCompat="@drawable/ic_add"
+        app:useCompatPadding="true" />
+
     <Button
-        android:id="@+id/select_ride_button"
+        android:id="@+id/select_ride_join"
         style="@style/TextStyle7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

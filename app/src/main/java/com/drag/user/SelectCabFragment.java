@@ -1,17 +1,22 @@
 package com.drag.user;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +39,10 @@ import com.drag.user.network.EndPointInterface;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -61,6 +70,9 @@ public class SelectCabFragment extends BottomSheetDialogFragment implements Sele
     private Button confirmRideView;
     private int refreshCount = 0;
     private String[] startTime;
+    private FloatingActionButton requestCabView;
+    private AlertDialog dialog;
+    private ProgressDialog pd;
 
     @Nullable
     @Override
@@ -136,6 +148,13 @@ public class SelectCabFragment extends BottomSheetDialogFragment implements Sele
                 pullAndRefresh();
             }
         });
+
+        requestCabView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestCab();
+            }
+        });
     }
 
     @Override
@@ -146,6 +165,7 @@ public class SelectCabFragment extends BottomSheetDialogFragment implements Sele
     }
 
     private void pullAndRefresh() {
+        requestCabView.show();
         confirmRideView.setVisibility(View.GONE);
         refreshCount++;
         if (refreshCount != 1)
@@ -159,7 +179,7 @@ public class SelectCabFragment extends BottomSheetDialogFragment implements Sele
     private void getAvailableCabList() {
         EndPointInterface service = APIUtils.getAPIService(parentActivity);
         Call<List<Cab>> call = service.availableCabList(
-                user.getEmail(), token, travelDetails.getCollegeName(), travelDetails.getPickup(),
+                user.getEmail(), token, travelDetails.getCity(), travelDetails.getPickup(),
                 travelDetails.getDrop(), travelDetails.getSeats(), travelDetails.getStartTime());
 
         call.enqueue(new Callback<List<Cab>>() {
@@ -219,6 +239,7 @@ public class SelectCabFragment extends BottomSheetDialogFragment implements Sele
     @Override
     public void onListItemClick(final Cab selectedCab, String pickup, String drop, final String startTime) {
         BottomSheetBehavior.from(bottomSheetInternal).setState(BottomSheetBehavior.STATE_EXPANDED);
+        requestCabView.hide();
         confirmRideView.setVisibility(View.VISIBLE);
         confirmRideView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,6 +263,100 @@ public class SelectCabFragment extends BottomSheetDialogFragment implements Sele
         });
     }
 
+    private void requestCab() {
+        View customView = getLayoutInflater().inflate(R.layout.layout_select_request, (ViewGroup) rootView.getParent(), false);
+        TextView cityView = customView.findViewById(R.id.select_request_city);
+        cityView.setText(travelDetails.getCity());
+        TextView pickupView = customView.findViewById(R.id.select_request_pickup);
+        pickupView.setText(travelDetails.getPickup());
+        TextView dropView = customView.findViewById(R.id.select_request_drop);
+        dropView.setText(travelDetails.getDrop());
+        TextView timeView = customView.findViewById(R.id.select_request_time);
+        timeView.setText(getDisplayTime(travelDetails.getStartTime()));
+        TextView seatsView = customView.findViewById(R.id.select_request_seats);
+        seatsView.setText(travelDetails.getSeats());
+        TextView nameView = customView.findViewById(R.id.select_request_name);
+        nameView.setText(user.getName());
+        TextView contactView = customView.findViewById(R.id.select_request_mobile_number);
+        contactView.setText(user.getContact());
+
+        dialog = new AlertDialog.Builder(parentActivity)
+                .setView(customView)
+                .setPositiveButton("Submit", null)
+                .setNegativeButton("Cancel", null)
+                .create();
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface di) {
+                dialog.getButton(di.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sendRequest();
+                        dialog.dismiss();
+                    }
+                });
+                dialog.getButton(di.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        pullAndRefresh();
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+        dialog.show();
+    }
+
+    private void sendRequest() {
+        pd = new ProgressDialog(getContext());
+        pd.setMessage("Sending...");
+        pd.show();
+        EndPointInterface service = APIUtils.getAPIService(parentActivity);
+        Call<User> call = service.requestRide(user.getEmail(), token, travelDetails.getCity(),
+                travelDetails.getPickup(), travelDetails.getDrop(), travelDetails.getStartTime(), travelDetails.getSeats());
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                if (response.body() != null) {
+                    pd.cancel();
+                    dismiss();
+                    Toast.makeText(parentActivity, "Submitted successfully", Toast.LENGTH_SHORT).show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(parentActivity, "Your request will be processed within 6 hours", Toast.LENGTH_LONG).show();
+                        }
+                    }, 2000);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                pd.cancel();
+                Log.e(TAG + " On Failure", t.getMessage());
+                Toast.makeText(getContext(), "Please check your internet connection or try again later.", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private String getDisplayTime(String startTime) {
+        String displayTime = null;
+        try {
+            Calendar calendar = Calendar.getInstance();
+            Date time = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(startTime);
+            calendar.setTime(time);
+            calendar.add(Calendar.HOUR, 5);
+            calendar.add(Calendar.MINUTE, 30);
+            displayTime = new SimpleDateFormat("MMM d, hh:mm a").format(calendar.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return displayTime;
+    }
+
     private boolean isConnectedToInternet() {
         ConnectivityManager connMgr = (ConnectivityManager) parentActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = null;
@@ -262,6 +377,7 @@ public class SelectCabFragment extends BottomSheetDialogFragment implements Sele
         refreshLayout = rootView.findViewById(R.id.select_cab_refresh_layout);
         recyclerView = rootView.findViewById(R.id.select_cab_recycler_view);
         emptyView = rootView.findViewById(R.id.select_cab_empty_layout);
+        requestCabView = rootView.findViewById(R.id.select_cab_request);
         confirmRideView = rootView.findViewById(R.id.select_cab_button);
     }
 }
