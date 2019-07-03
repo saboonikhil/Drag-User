@@ -72,11 +72,23 @@ public interface EndPointInterface {
     Call<List<Cab>> userRideList(
             @Query("x_key") String key,
             @Query("token") String token,
-            @Query("collegeName") String collegeName,
+            @Query("city") String city,
             @Query("pickup") String pickup,
             @Query("drop") String drop,
             @Query("seats") String seats,
             @Query("startTime") String startTime
+    );
+
+    @POST("/api/rides")
+    @FormUrlEncoded
+    Call<User> requestRide(
+            @Query("x_key") String key,
+            @Query("token") String token,
+            @Field("city") String city,
+            @Field("pickup") String pickup,
+            @Field("drop") String drop,
+            @Field("startTime") String startTime,
+            @Field("seats") String seats
     );
 
     @PUT("/api/users/{uID}/joinRide")
@@ -93,7 +105,7 @@ public interface EndPointInterface {
     Call<List<Cab>> availableCabList(
             @Query("x_key") String key,
             @Query("token") String token,
-            @Query("collegeName") String collegeName,
+            @Query("city") String city,
             @Query("pickup") String pickup,
             @Query("drop") String drop,
             @Query("seats") String seats,

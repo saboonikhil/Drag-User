@@ -37,7 +37,7 @@
     <string name="notifications">Notifications</string>
 
     <!-- Strings related to Book Ride -->
-    <string name="select_college">Select College</string>
+    <string name="select_city">Select City</string>
     <string name="select_pickup">Select Pickup</string>
     <string name="select_drop">Select Drop</string>
     <string name="swap_location">Swap Location</string>
@@ -59,7 +59,7 @@
         4. Your share of fare will be known to you before allocating the cab.\n\n
         5. Cab will be allocated only after tele-verification of your booking.\n\n
         6. You can track status of your booking in the Trips section of the app.</string>
-    <string name="request_message">Can\'t find the right ride? \n Request one</string>
+    <string name="select_request_title">Can\'t find the right ride? \n Request One!</string>
     <string name="join_success_message">Your ride joining request is successful.</string>
     <string name="share_via_whatsapp">Share via Whatsapp</string>
 
@@ -73,7 +73,7 @@
     <string name="fare">Fare</string>
     <string name="cab_details">Cab Details</string>
     <string name="your_details">Your Details</string>
-    <string name="college_name">College Name</string>
+    <string name="city">City</string>
     <string name="your_name">Your Name</string>
     <string name="pickup">Pickup</string>
     <string name="drop">Drop</string>

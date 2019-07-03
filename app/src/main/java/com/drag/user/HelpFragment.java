@@ -37,7 +37,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class HelpFragment extends DialogFragment {
 
-    private String TAG = HelpFragment.class.getSimpleName();
+    private static String TAG = HelpFragment.class.getSimpleName();
     private View rootView;
     private Activity parentActivity;
     private InputMethodManager imm;
@@ -124,7 +124,7 @@ public class HelpFragment extends DialogFragment {
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 progressDialog.cancel();
                 Log.e(TAG + " On Failure", t.getMessage());
-                Snackbar.make(rootView, "Please check your data connection or try again later.", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(rootView, "Please check your internet connection or try again later.", Snackbar.LENGTH_LONG).show();
             }
         });
     }

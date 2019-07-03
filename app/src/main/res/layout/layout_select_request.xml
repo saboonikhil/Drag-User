@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        style="@style/TextStyle29"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/select_request_title"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextStyle11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/city" />
+
+            <TextView
+                android:id="@+id/select_request_city"
+                style="@style/TextStyle17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:gravity="end"
+                tools:text="Vellore" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextStyle11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pickup" />
+
+            <TextView
+                android:id="@+id/select_request_pickup"
+                style="@style/TextStyle17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:gravity="end"
+                tools:text="Vellore Institute Of Technology" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextStyle11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/drop" />
+
+            <TextView
+                android:id="@+id/select_request_drop"
+                style="@style/TextStyle17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:gravity="end"
+                tools:text="Bengaluru Airport" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextStyle11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/time" />
+
+            <TextView
+                android:id="@+id/select_request_time"
+                style="@style/TextStyle17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:gravity="end"
+                tools:text="Fri, Jul 5, 03:00 PM" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextStyle11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/seats" />
+
+            <TextView
+                android:id="@+id/select_request_seats"
+                style="@style/TextStyle17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:gravity="end"
+                tools:text="4" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextStyle11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/your_name" />
+
+            <TextView
+                android:id="@+id/select_request_name"
+                style="@style/TextStyle17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:gravity="end"
+                tools:text="Lorem Ipsum" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextStyle11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mobile_number" />
+
+            <TextView
+                android:id="@+id/select_request_mobile_number"
+                style="@style/TextStyle17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:gravity="end"
+                tools:text="+91 9876543210" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
