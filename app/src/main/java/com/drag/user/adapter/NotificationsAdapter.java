@@ -12,6 +12,10 @@ import android.widget.TextView;
 import com.drag.user.R;
 import com.drag.user.model.Notification;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.NotificationHolder> {
@@ -51,7 +55,17 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
         holder.subjectView.setText(notificationList.get(position).getSubject());
         holder.bodyView.setText(notificationList.get(position).getBody());
-        holder.timeView.setText(notificationList.get(position).getUpdatedAt());
+
+        try {
+            Calendar calendar = Calendar.getInstance();
+            Date displayTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(notificationList.get(position).getUpdatedAt());
+            calendar.setTime(displayTime);
+            calendar.add(Calendar.HOUR, 5);
+            calendar.add(Calendar.MINUTE, 30);
+            holder.timeView.setText(new SimpleDateFormat("MMM d, hh:mm a").format(calendar.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

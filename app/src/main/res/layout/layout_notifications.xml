@@ -50,8 +50,8 @@
                 style="@style/TextStyle8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 tools:text="You are using alpha version of the app." />
 
             <TextView
