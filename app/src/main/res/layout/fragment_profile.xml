@@ -81,6 +81,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:drawablePadding="12dp"
+            android:gravity="center"
             tools:text="Lorem Ipsum" />
 
         <LinearLayout
@@ -105,9 +106,8 @@
                 <TextView
                     android:id="@+id/profile_email_tv"
                     style="@style/TextStyle"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:drawableStart="@drawable/ic_email"
                     android:drawablePadding="16dp"
                     android:text="@string/email" />
@@ -115,10 +115,14 @@
                 <TextView
                     android:id="@+id/profile_email"
                     style="@style/TextStyle19"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:drawablePadding="12dp"
-                    tools:text="username@mail.com" />
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:maxLines="1"
+                    tools:text="user@mail.com" />
 
             </LinearLayout>
 
@@ -138,9 +142,8 @@
                 <TextView
                     android:id="@+id/profile_mobile_number_tv"
                     style="@style/TextStyle"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:drawableStart="@drawable/ic_mobile_number"
                     android:drawablePadding="16dp"
                     android:text="@string/mobile_number" />
@@ -148,9 +151,13 @@
                 <TextView
                     android:id="@+id/profile_mobile_number"
                     style="@style/TextStyle19"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:drawablePadding="12dp"
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:maxLines="1"
                     tools:text="+91 9876543210" />
 
             </LinearLayout>
@@ -171,9 +178,8 @@
                 <TextView
                     android:id="@+id/profile_alternate_number_tv"
                     style="@style/TextStyle"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:drawableStart="@drawable/ic_alternate_number"
                     android:drawablePadding="16dp"
                     android:text="@string/alternate_number" />
@@ -181,9 +187,13 @@
                 <TextView
                     android:id="@+id/profile_alternate_number"
                     style="@style/TextStyle19"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:drawablePadding="12dp"
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:maxLines="1"
                     tools:text="+91 9876543210" />
 
             </LinearLayout>
@@ -204,9 +214,8 @@
                 <TextView
                     android:id="@+id/profile_password_tv"
                     style="@style/TextStyle"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:drawableStart="@drawable/ic_password"
                     android:drawablePadding="16dp"
                     android:text="@string/password" />
@@ -214,9 +223,13 @@
                 <TextView
                     android:id="@+id/profile_password"
                     style="@style/TextStyle19"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:drawablePadding="12dp"
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:maxLines="1"
                     android:text="@string/asterisks" />
 
             </LinearLayout>

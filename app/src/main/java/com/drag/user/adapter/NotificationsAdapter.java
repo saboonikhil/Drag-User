@@ -51,8 +51,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
         holder.subjectView.setText(notificationList.get(position).getSubject());
         holder.bodyView.setText(notificationList.get(position).getBody());
-        String timeText = "Today";
-        holder.timeView.setText(timeText);
+        holder.timeView.setText(notificationList.get(position).getUpdatedAt());
     }
 
     @Override
