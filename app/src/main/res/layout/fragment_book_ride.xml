@@ -36,10 +36,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="@string/select_college" />
+                    android:text="@string/select_city" />
 
                 <AutoCompleteTextView
-                    android:id="@+id/book_ride_college"
+                    android:id="@+id/book_ride_city"
                     style="@style/TextStyle15"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -48,13 +48,13 @@
                     android:layout_weight="2"
                     android:background="@drawable/border_text_view"
                     android:cursorVisible="false"
-                    android:drawableStart="@drawable/ic_college"
+                    android:drawableStart="@drawable/ic_city"
                     android:drawableEnd="@drawable/ic_expand"
                     android:drawablePadding="12dp"
                     android:inputType="textAutoComplete|text"
                     android:padding="16dp"
                     tools:ignore="LabelFor"
-                    tools:text="VIT Vellore" />
+                    tools:text="Vellore" />
 
             </LinearLayout>
 
@@ -110,7 +110,7 @@
                     android:padding="16dp"
                     android:singleLine="true"
                     tools:ignore="LabelFor"
-                    tools:text="Mens Hostel" />
+                    tools:text="Vellore Institute Of Technology" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -132,7 +132,8 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:contentDescription="@string/swap_location"
-                        android:src="@drawable/ic_swap" />
+                        android:src="@drawable/ic_swap"
+                        android:visibility="invisible" />
 
                 </LinearLayout>
 
@@ -304,7 +305,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:progress="100" />
+                    android:progress="30" />
 
                 <TextView
                     android:id="@+id/book_ride_seats"
@@ -313,7 +314,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="0.2"
-                    tools:text="4" />
+                    tools:text="1" />
 
             </LinearLayout>
 
@@ -331,7 +332,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
-        android:text="@string/select_cab"
+        android:text="@string/select_ride"
         android:textAllCaps="false" />
 
 </LinearLayout>

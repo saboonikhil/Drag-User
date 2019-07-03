@@ -27,7 +27,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -51,19 +50,18 @@ public class BookRideFragment extends Fragment {
     private Activity parentActivity;
     private View rootView;
     private Location[] locations;
-    private String[] colleges;
+    private String[] cities;
     private Calendar DateCalendar, TimeCalendar;
     private InputMethodManager imm;
-    private ImageButton swapLocationView;
-    private AutoCompleteTextView collegeNameView, pickupView, dropView;
+    //private ImageButton swapLocationView;
+    private AutoCompleteTextView cityView, pickupView, dropView;
     private EditText dateView, timeView;
     private SeekBar seekBarView;
     private TextView seatsView;
     private Button selectView;
-    private String selectedCollege;
+    private String selectedCity;
     private boolean route = true;
     private long thirtyDays = 2592000000L;
-    private Cab travelDetails;
 
     @Nullable
     @Override
@@ -83,21 +81,21 @@ public class BookRideFragment extends Fragment {
         SharedPreferences pref = parentActivity.getSharedPreferences("AppPref", MODE_PRIVATE);
         locations = (Location[]) ObjectSerializer.deserialize(pref.getString("locations",
                 ObjectSerializer.serialize(new Location[10])));
-        colleges = new String[locations.length];
+        cities = new String[locations.length];
         for (int i = 0; i < locations.length; i++)
-            colleges[i] = locations[i].getCollegeName();
+            cities[i] = locations[i].getCity();
 
         imm = (InputMethodManager) parentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        GradientDrawable collegeNameGrad = (GradientDrawable) collegeNameView.getBackground();
-        collegeNameGrad.setStroke(2, getResources().getColor(R.color.white_two));
+        GradientDrawable cityGrad = (GradientDrawable) cityView.getBackground();
+        cityGrad.setStroke(2, getResources().getColor(R.color.white_two));
         GradientDrawable pickupGrad = (GradientDrawable) pickupView.getBackground();
         pickupGrad.setStroke(2, getResources().getColor(R.color.white_two));
         GradientDrawable dropGrad = (GradientDrawable) dropView.getBackground();
         dropGrad.setStroke(2, getResources().getColor(R.color.white_two));
 
-        setupCollegeSpinner();
-        collegeNameView.addTextChangedListener(new TextWatcher() {
+        setupCitySpinner();
+        cityView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -110,10 +108,10 @@ public class BookRideFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                selectedCollege = collegeNameView.getText().toString();
-                selectLocation(selectedCollege, route);
-                GradientDrawable collegeNameGrad = (GradientDrawable) collegeNameView.getBackground();
-                collegeNameGrad.setStroke(1, getResources().getColor(R.color.white_two));
+                selectedCity = cityView.getText().toString();
+                selectLocation(selectedCity, route);
+                GradientDrawable cityGrad = (GradientDrawable) cityView.getBackground();
+                cityGrad.setStroke(1, getResources().getColor(R.color.white_two));
             }
         });
 
@@ -121,8 +119,8 @@ public class BookRideFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 imm.hideSoftInputFromWindow(pickupView.getWindowToken(), 0);
-                if (TextUtils.isEmpty(selectedCollege)) {
-                    GradientDrawable myGrad = (GradientDrawable) collegeNameView.getBackground();
+                if (TextUtils.isEmpty(selectedCity)) {
+                    GradientDrawable myGrad = (GradientDrawable) cityView.getBackground();
                     myGrad.setStroke(2, Color.RED);
                 }
                 return true;
@@ -149,8 +147,8 @@ public class BookRideFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 imm.hideSoftInputFromWindow(dropView.getWindowToken(), 0);
-                if (TextUtils.isEmpty(selectedCollege)) {
-                    GradientDrawable myGrad = (GradientDrawable) collegeNameView.getBackground();
+                if (TextUtils.isEmpty(selectedCity)) {
+                    GradientDrawable myGrad = (GradientDrawable) cityView.getBackground();
                     myGrad.setStroke(2, Color.RED);
                 }
                 return true;
@@ -173,11 +171,11 @@ public class BookRideFragment extends Fragment {
             }
         });
 
-        swapLocationView.setOnClickListener(new View.OnClickListener() {
+        /*swapLocationView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(selectedCollege)) {
-                    GradientDrawable myGrad = (GradientDrawable) collegeNameView.getBackground();
+                if (TextUtils.isEmpty(selectedCity)) {
+                    GradientDrawable myGrad = (GradientDrawable) cityView.getBackground();
                     myGrad.setStroke(2, Color.RED);
                 } else if ((TextUtils.isEmpty(pickupView.getText().toString())) && (TextUtils.isEmpty(dropView.getText().toString()))) {
                     GradientDrawable myGrad = (GradientDrawable) pickupView.getBackground();
@@ -187,10 +185,10 @@ public class BookRideFragment extends Fragment {
                     Editable location = pickupView.getText();
                     pickupView.setText(dropView.getText());
                     dropView.setText(location);
-                    selectLocation(selectedCollege, route);
+                    selectLocation(selectedCity, route);
                 }
             }
-        });
+        });*/
 
         setupDateTimePicker();
         DateCalendar.setTimeInMillis(System.currentTimeMillis() + 86400000);
@@ -198,7 +196,7 @@ public class BookRideFragment extends Fragment {
         TimeCalendar.setTimeInMillis(System.currentTimeMillis() + 86400000);
         timeView.setText(new SimpleDateFormat("hh:mm a", Locale.US).format(TimeCalendar.getTime()));
 
-        seatsView.setText("4");
+        seatsView.setText("1");
         seekBarView.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -228,16 +226,16 @@ public class BookRideFragment extends Fragment {
         });
     }
 
-    private void selectLocation(String collegeSelected, boolean routeSelected) {
-        boolean isCollegePresent = false;
+    private void selectLocation(String citySelected, boolean routeSelected) {
+        boolean isCityPresent = false;
         int position = 0;
-        for (int i = 0; i < colleges.length; i++) {
-            if (collegeSelected.equals(colleges[i])) {
-                isCollegePresent = true;
+        for (int i = 0; i < cities.length; i++) {
+            if (citySelected.equals(cities[i])) {
+                isCityPresent = true;
                 position = i;
             }
         }
-        if (isCollegePresent) {
+        if (isCityPresent) {
             setupPickupLocationSpinner(position, routeSelected);
             setupDropLocationSpinner(position, routeSelected);
         } else {
@@ -247,12 +245,12 @@ public class BookRideFragment extends Fragment {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private void setupCollegeSpinner() {
-        ArrayAdapter<String> collegeSpinnerAdapter = new ArrayAdapter<>(parentActivity,
-                R.layout.support_simple_spinner_dropdown_item, colleges);
-        collegeNameView.setAdapter(collegeSpinnerAdapter);
-        collegeNameView.setKeyListener(null);
-        collegeNameView.setOnTouchListener(new View.OnTouchListener() {
+    private void setupCitySpinner() {
+        ArrayAdapter<String> citySpinnerAdapter = new ArrayAdapter<>(parentActivity,
+                R.layout.support_simple_spinner_dropdown_item, cities);
+        cityView.setAdapter(citySpinnerAdapter);
+        cityView.setKeyListener(null);
+        cityView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 ((AutoCompleteTextView) view).showDropDown();
@@ -353,7 +351,7 @@ public class BookRideFragment extends Fragment {
     }
 
     private void select() {
-        String collegeName = collegeNameView.getText().toString();
+        String city = cityView.getText().toString();
         String pickup = pickupView.getText().toString();
         String drop = dropView.getText().toString();
         Date calendarDate = DateCalendar.getTime();
@@ -364,8 +362,8 @@ public class BookRideFragment extends Fragment {
         boolean cancel = false;
         View focusView = null;
 
-        if (TextUtils.isEmpty(collegeName)) {
-            focusView = collegeNameView;
+        if (TextUtils.isEmpty(city)) {
+            focusView = cityView;
             cancel = true;
         } else if (TextUtils.isEmpty(pickup)) {
             focusView = pickupView;
@@ -380,17 +378,7 @@ public class BookRideFragment extends Fragment {
             myGrad.setStroke(2, Color.RED);
         } else {
             if (isConnectedToInternet()) {
-                for (Location location : locations) {
-                    if (collegeName.equals(location.getCollegeName())) {
-                        for (String aList : location.getSetA()) {
-                            if (pickup.equals(aList)) {
-                                travelDetails = new Cab(collegeName, collegeName, drop, startTime, seats);
-                            } else if (drop.equals(aList)) {
-                                travelDetails = new Cab(collegeName, pickup, collegeName, startTime, seats);
-                            }
-                        }
-                    }
-                }
+                Cab travelDetails = new Cab(city, pickup, drop, startTime, seats);
                 if (seats.equals("4")) {
                     SelectCabFragment selectCab = new SelectCabFragment();
                     Bundle bundle = new Bundle();
@@ -441,10 +429,10 @@ public class BookRideFragment extends Fragment {
     }
 
     private void initViews() {
-        collegeNameView = rootView.findViewById(R.id.book_ride_college);
+        cityView = rootView.findViewById(R.id.book_ride_city);
         pickupView = rootView.findViewById(R.id.book_ride_pickup);
         dropView = rootView.findViewById(R.id.book_ride_drop);
-        swapLocationView = rootView.findViewById(R.id.book_ride_swap_location);
+        //swapLocationView = rootView.findViewById(R.id.book_ride_swap_location);
         dateView = rootView.findViewById(R.id.book_ride_date);
         timeView = rootView.findViewById(R.id.book_ride_time);
         seekBarView = rootView.findViewById(R.id.book_ride_seek_bar);

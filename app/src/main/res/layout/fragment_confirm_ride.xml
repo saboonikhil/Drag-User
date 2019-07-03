@@ -150,15 +150,15 @@
                             style="@style/TextStyle11"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/college_name" />
+                            android:text="@string/city" />
 
                         <TextView
-                            android:id="@+id/confirm_ride_college_name"
+                            android:id="@+id/confirm_ride_city"
                             style="@style/TextStyle17"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            tools:text="VIT Vellore" />
+                            tools:text="Vellore" />
 
                     </LinearLayout>
 
@@ -180,7 +180,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            tools:text="Mens Hostel G Block, VIT Vellore" />
+                            tools:text="Vellore Institute Of Technology" />
 
                     </LinearLayout>
 
@@ -202,7 +202,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            tools:text="Bengaluru International Airport" />
+                            tools:text="Bengaluru Airport" />
 
                     </LinearLayout>
 
