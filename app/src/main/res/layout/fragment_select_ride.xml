@@ -233,7 +233,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
-        android:text="@string/request_to_join"
+        android:text="@string/confirm_ride"
         android:textAllCaps="false"
         android:visibility="gone" />
 

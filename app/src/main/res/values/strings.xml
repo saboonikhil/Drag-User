@@ -48,7 +48,6 @@
     <!-- Strings related to Select Ride -->
     <string name="select_ride">Select Ride</string>
     <string name="select_ride_note">Note: Fare will vary as seats get filled</string>
-    <string name="request_to_join">Request To Join</string>
     <string name="swipe_up_to_see_more">Swipe up to see more</string>
     <string name="sedan">Sedan</string>
     <string name="no_rides_available_now">No Rides Available Now !</string>
@@ -62,6 +61,7 @@
     <string name="select_request_title">Can\'t find the right ride? \n Request One!</string>
     <string name="join_success_message">Your ride joining request is successful.</string>
     <string name="share_via_whatsapp">Share via Whatsapp</string>
+    <string name="join">JOIN</string>
 
     <!-- Strings related to Select Cab -->
     <string name="select_cab">Select Cab</string>
