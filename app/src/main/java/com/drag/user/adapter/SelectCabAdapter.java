@@ -84,12 +84,12 @@ public class SelectCabAdapter extends RecyclerView.Adapter<SelectCabAdapter.Sele
                         calendar.setTime(startTime);
                         calendar.add(Calendar.HOUR, 5);
                         calendar.add(Calendar.MINUTE, 30);
-                        holder.startTimeView.setText(new SimpleDateFormat("hh:mm a, d MMM YY").format(calendar.getTime()));
+                        holder.startTimeView.setText(new SimpleDateFormat("hh:mm a, d MMM yy").format(calendar.getTime()));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    holder.startTimeView.setText(new SimpleDateFormat("hh:mm a, d MMM YY").format(cabCalendar.getTime()));
+                    holder.startTimeView.setText(new SimpleDateFormat("hh:mm a, d MMM yy").format(cabCalendar.getTime()));
                     startTime[position] = cabList.get(position).getStartTime();
                 }
             } else {
@@ -98,7 +98,7 @@ public class SelectCabAdapter extends RecyclerView.Adapter<SelectCabAdapter.Sele
                 travelCalendar.setTime(travelStartTime);
                 travelCalendar.add(Calendar.HOUR, 5);
                 travelCalendar.add(Calendar.MINUTE, 30);
-                holder.startTimeView.setText(new SimpleDateFormat("hh:mm a, d MMM YY").format(travelCalendar.getTime()));
+                holder.startTimeView.setText(new SimpleDateFormat("hh:mm a, d MMM yy").format(travelCalendar.getTime()));
                 startTime[position] = travelDetails.getStartTime();
             }
         } catch (ParseException e) {

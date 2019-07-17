@@ -61,7 +61,7 @@ public class SelectRideAdapter extends RecyclerView.Adapter<SelectRideAdapter.Se
                 calendar.setTime(startTime);
                 calendar.add(Calendar.HOUR, 5);
                 calendar.add(Calendar.MINUTE, 30);
-                holder.startTimeView.setText(new SimpleDateFormat("hh:mm a, d MMM YY").format(calendar.getTime()));
+                holder.startTimeView.setText(new SimpleDateFormat("hh:mm a, d MMM yy").format(calendar.getTime()));
             }
         } catch (ParseException e) {
             e.printStackTrace();
