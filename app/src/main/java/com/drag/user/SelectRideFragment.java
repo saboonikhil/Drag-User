@@ -189,17 +189,19 @@ public class SelectRideFragment extends BottomSheetDialogFragment implements Sel
         call.enqueue(new Callback<List<Cab>>() {
             @Override
             public void onResponse(@NonNull Call<List<Cab>> call, @NonNull Response<List<Cab>> response) {
-                if (refreshCount == 1) {
-                    shimmerView.stopShimmerAnimation();
-                    shimmerView.setVisibility(View.GONE);
-                    generateDataList(response.body());
-                } else {
-                    selectRideAdapter.refreshData(response.body());
-                    if (selectRideAdapter.getItemCount() == 0)
-                        emptyView.setVisibility(View.VISIBLE);
-                    else
-                        emptyView.setVisibility(View.INVISIBLE);
-                    refreshLayout.setRefreshing(false);
+                if (response.body() != null) {
+                    if (refreshCount == 1) {
+                        shimmerView.stopShimmerAnimation();
+                        shimmerView.setVisibility(View.GONE);
+                        generateDataList(response.body());
+                    } else {
+                        selectRideAdapter.refreshData(response.body());
+                        if (selectRideAdapter.getItemCount() == 0)
+                            emptyView.setVisibility(View.VISIBLE);
+                        else
+                            emptyView.setVisibility(View.INVISIBLE);
+                        refreshLayout.setRefreshing(false);
+                    }
                 }
             }
 
