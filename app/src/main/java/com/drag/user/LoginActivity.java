@@ -24,9 +24,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.drag.user.model.Location;
 import com.drag.user.model.User;
 import com.drag.user.network.APIUtils;
 import com.drag.user.network.EndPointInterface;
+import com.drag.user.util.ObjectSerializer;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -91,7 +93,28 @@ public class LoginActivity extends AppCompatActivity {
         if (isTokenValid()) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
+        } else {
+            initLocations();
         }
+    }
+
+    private void initLocations() {
+        EndPointInterface service = APIUtils.getAPIService(LoginActivity.this);
+        service.initLocation().enqueue(new Callback<Location[]>() {
+            @Override
+            public void onResponse(@NonNull Call<Location[]> call, @NonNull Response<Location[]> response) {
+                if (response.body() != null) {
+                    SharedPreferences.Editor edit = pref.edit();
+                    edit.putString("locations", ObjectSerializer.serialize(response.body()));
+                    edit.apply();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Location[]> call, @NonNull Throwable t) {
+                Log.e(TAG + " On Failure", t.getMessage());
+            }
+        });
     }
 
     private boolean isTokenValid() {
@@ -132,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
             focusView.getBackground().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_ATOP);
         } else {
             if (isConnectedToInternet()) {
-                pd = ProgressDialog.show(this, "", "Dragging in...", true, false);
+                pd = ProgressDialog.show(this, "", "Dragging in...", true);
                 EndPointInterface service = APIUtils.getAPIService(LoginActivity.this);
                 service.authSignIn(email, password, "user").enqueue(new Callback<User>() {
                     @Override
