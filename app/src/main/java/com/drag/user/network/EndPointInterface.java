@@ -4,7 +4,6 @@ import com.drag.user.model.Cab;
 import com.drag.user.model.Location;
 import com.drag.user.model.Notification;
 import com.drag.user.model.Paytm;
-import com.drag.user.model.Trip;
 import com.drag.user.model.User;
 
 import java.util.List;
@@ -46,8 +45,8 @@ public interface EndPointInterface {
             @Field("password") String password
     );
 
-    @GET("/api/users/{uID}")
-    Call<User> userDetail(
+    @GET("/api/users/{uID}/trips")
+    Call<Cab[]> userTrips(
             @Path("uID") String uID,
             @Query("x_key") String key,
             @Query("token") String token
@@ -74,7 +73,7 @@ public interface EndPointInterface {
             @Field("password") String password
     );
 
-    @GET("/api/rides")
+    /*@GET("/api/rides")
     Call<List<Cab>> userRideList(
             @Query("x_key") String key,
             @Query("token") String token,
@@ -83,9 +82,9 @@ public interface EndPointInterface {
             @Query("drop") String drop,
             @Query("seats") String seats,
             @Query("startTime") String startTime
-    );
+    );*/
 
-    @POST("/api/rides")
+    /*@POST("/api/rides")
     @FormUrlEncoded
     Call<User> requestRide(
             @Query("x_key") String key,
@@ -105,7 +104,7 @@ public interface EndPointInterface {
             @Query("token") String token,
             @Field("ride") String cID,
             @Field("seats") String seats
-    );
+    );*/
 
     @GET("/api/cabs")
     Call<List<Cab>> availableCabList(

@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.drag.user.adapter.TripsAdapter;
-import com.drag.user.model.Trip;
+import com.drag.user.model.Cab;
 import com.drag.user.model.User;
 import com.drag.user.network.APIUtils;
 import com.drag.user.network.EndPointInterface;
@@ -33,7 +33,6 @@ public class TripsFragment extends Fragment implements TripsAdapter.ListItemClic
     private String TAG = TripsFragment.class.getSimpleName();
     private Activity parentActivity;
     private View rootView;
-    private SharedPreferences pref;
     private String token;
     private User user;
     private TripsAdapter tripsAdapter;
@@ -53,59 +52,55 @@ public class TripsFragment extends Fragment implements TripsAdapter.ListItemClic
         super.onViewCreated(view, savedInstanceState);
         initViews();
 
-        pref = parentActivity.getSharedPreferences("AppPref", MODE_PRIVATE);
+        SharedPreferences pref = parentActivity.getSharedPreferences("AppPref", MODE_PRIVATE);
         token = pref.getString("token", "");
         String json = pref.getString("dbObj", "");
         user = new Gson().fromJson(json, User.class);
-
-        generateArrayData(user.getTrips());
-        if (user.getTrips().length == 0)
-            progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (tripsAdapter == null)
+            progressBar.setVisibility(View.VISIBLE);
         updateTripsData();
     }
 
     private void updateTripsData() {
         EndPointInterface service = APIUtils.getAPIService(parentActivity);
-        service.userDetail(user.get_id(), user.getEmail(), token).enqueue(new Callback<User>() {
+        service.userTrips(user.get_id(), user.getEmail(), token).enqueue(new Callback<Cab[]>() {
             @Override
-            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+            public void onResponse(@NonNull Call<Cab[]> call, @NonNull Response<Cab[]> response) {
                 if (response.body() != null) {
                     progressBar.setVisibility(View.GONE);
-                    SharedPreferences.Editor edit = pref.edit();
-                    edit.putString("dbObj", new Gson().toJson(response.body()));
-                    edit.apply();
-                    tripsAdapter.refreshData(response.body().getTrips());
-                    if (response.body().getTrips().length == 0)
+                    generateArrayData(response.body());
+                    if (response.body().length == 0)
                         emptyView.setVisibility(View.VISIBLE);
-                    else if (response.body().getTrips().length > 0)
+                    else
                         emptyView.setVisibility(View.GONE);
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Cab[]> call, @NonNull Throwable t) {
                 Log.e(TAG + " On Failure", t.getMessage());
                 progressBar.setVisibility(View.GONE);
-                if (tripsAdapter.getItemCount() == 0) {
-                    emptyView.setVisibility(View.VISIBLE);
+                if (tripsAdapter != null) {
+                    if (tripsAdapter.getItemCount() == 0)
+                        emptyView.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
 
-    private void generateArrayData(Trip[] trips) {
-        tripsAdapter = new TripsAdapter(parentActivity, trips, this);
+    private void generateArrayData(Cab[] trips) {
+        tripsAdapter = new TripsAdapter(trips, this);
         recyclerView.setAdapter(tripsAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
 
     @Override
-    public void onListItemClick(Trip[] trips, int itemPosition) {
+    public void onListItemClick(Cab[] trips, int itemPosition) {
         TripDetailsFragment tripDetails = new TripDetailsFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("trip_details", trips);

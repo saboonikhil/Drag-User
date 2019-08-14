@@ -1,8 +1,6 @@
 package com.drag.user.adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.drag.user.R;
 import com.drag.user.model.Cab;
-import com.drag.user.model.Trip;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,20 +19,12 @@ import java.util.Date;
 
 public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.TripsCardViewHolder> {
 
-    private Activity parentActivity;
-    private Trip[] trips;
+    private Cab[] trips;
     private ListItemClickListener mOnClickListener;
-    private String startTime;
 
-    public TripsAdapter(Activity parentActivity, Trip[] trips, ListItemClickListener listener) {
-        this.parentActivity = parentActivity;
+    public TripsAdapter(Cab[] trips, ListItemClickListener listener) {
         this.trips = trips;
         mOnClickListener = listener;
-    }
-
-    public void refreshData(Trip[] dataSet) {
-        trips = dataSet;
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -49,31 +37,49 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.TripsCardVie
     @SuppressLint("SimpleDateFormat")
     @Override
     public void onBindViewHolder(@NonNull TripsCardViewHolder holder, int position) {
-        Cab trip = null;
+        try {
+            Calendar calendar = Calendar.getInstance();
+            Date displayTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(trips[position].getStartTime());
+            calendar.setTime(displayTime);
+            calendar.add(Calendar.HOUR, 5);
+            calendar.add(Calendar.MINUTE, 30);
+            holder.startTimeView.setText(new SimpleDateFormat("EEE, MMM d, hh:mm a").format(calendar.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        if (trips[position].getStatus().equals("Sharing")) {
-            try {
-                Calendar calendar = Calendar.getInstance();
-                Date displayTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(trips[position].getCab().getStartTime());
-                calendar.setTime(displayTime);
-                calendar.add(Calendar.HOUR, 5);
-                calendar.add(Calendar.MINUTE, 30);
-                holder.startTimeView.setText(new SimpleDateFormat("EEE, MMM d, hh:mm a").format(calendar.getTime()));
-            } catch (ParseException e) {
-                e.printStackTrace();
+        holder.pickupView.setText(trips[position].getPickup());
+        holder.dropView.setText(trips[position].getDrop());
+
+        if (!trips[position].isShared()) {
+            holder.idView.setText(trips[position].getRiders()[0].getTripId());
+            holder.pickupView.setText(trips[position].getRiders()[0].getPickup());
+            holder.dropView.setText(trips[position].getRiders()[0].getDrop());
+            String displayFare = "₹ " + trips[position].getRiders()[0].getFare();
+            holder.fareView.setText(displayFare);
+
+            switch (trips[position].getRiders()[0].getTripStatus()) {
+                case "Payment Successful":
+                    holder.statusView.setBackgroundColor(Color.parseColor("#507dff"));
+                    holder.statusView.setText(R.string.payment_successful);
+                    break;
+                case "Payment In Process":
+                    holder.statusView.setBackgroundColor(Color.parseColor("#edaf02"));
+                    holder.statusView.setText(R.string.payment_in_process);
+                    break;
+                case "Payment Failed":
+                    holder.statusView.setBackgroundColor(Color.parseColor("#ff4c4c"));
+                    holder.statusView.setText(R.string.payment_failed);
+                    break;
+                case "Cancelled":
+                    holder.statusView.setBackgroundColor(Color.parseColor("#ff4c4c"));
+                    holder.statusView.setText(R.string.trip_cancelled);
+                    break;
             }
+        }
 
-            holder.idView.setText(trips[position].getTravelDetails().getTripId());
-            holder.pickupView.setText(trips[position].getCab().getPickup());
-            holder.dropView.setText(trips[position].getCab().getDrop());
-
-            if (trips[position].getTravelDetails().getFare() != null) {
-                String displayFare = "₹ " + trips[position].getTravelDetails().getFare();
-                holder.fareView.setText(displayFare);
-            }
-
-            if (trips[position].getCab().isAvailable()) {
-                switch (trips[position].getCab().getSeats()) {
+            /*if (riders[position].getCab().isAvailable()) {
+                switch (riders[position].getCab().getSeats()) {
                     case "1":
                         holder.statusView.setBackgroundColor(Color.parseColor("#26888888"));
                         holder.statusView.setTextColor(Color.parseColor("#2ecc71"));
@@ -94,7 +100,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.TripsCardVie
                         break;
                 }
             } else {
-                if (trips[position].getCab().getCarName() == null) {
+                if (riders[position].getCab().getCarName() == null) {
                     holder.statusView.setBackgroundColor(Color.parseColor("#ff8247"));
                     String displayStatus = "Allocating Cab";
                     holder.statusView.setText(displayStatus);
@@ -103,52 +109,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.TripsCardVie
                     String displayStatus = "Ride Confirmed";
                     holder.statusView.setText(displayStatus);
                 }
-            }
-        } else if (trips[position].getStatus().equals("Completed"))
-            trip = trips[position].getCab();
-        else
-            trip = trips[position].getTravelDetails();
-
-        if (trip != null) {
-            try {
-                Calendar calendar = Calendar.getInstance();
-                Date displayTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(trip.getStartTime());
-                calendar.setTime(displayTime);
-                calendar.add(Calendar.HOUR, 5);
-                calendar.add(Calendar.MINUTE, 30);
-                holder.startTimeView.setText(new SimpleDateFormat("EEE, MMM d, hh:mm a").format(calendar.getTime()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            holder.idView.setText(trip.getTripId());
-            holder.pickupView.setText(trip.getPickup());
-            holder.dropView.setText(trip.getDrop());
-
-            if (trip.getFare() != null) {
-                String displayFare = "₹ " + trip.getFare();
-                holder.fareView.setText(displayFare);
-            }
-
-            switch (trips[position].getStatus()) {
-                case "Completed":
-                    holder.statusView.setBackgroundColor(Color.parseColor("#507dff"));
-                    holder.statusView.setText(R.string.payment_successful);
-                    break;
-                case "Processing":
-                    holder.statusView.setBackgroundColor(Color.parseColor("#edaf02"));
-                    holder.statusView.setText(R.string.payment_in_process);
-                    break;
-                case "Failed":
-                    holder.statusView.setBackgroundColor(Color.parseColor("#ff4c4c"));
-                    holder.statusView.setText(R.string.payment_failed);
-                    break;
-                case "Cancelled":
-                    holder.statusView.setBackgroundColor(Color.parseColor("#ff4c4c"));
-                    holder.statusView.setText(R.string.trip_cancelled);
-                    break;
-            }
-        }
+            } */
     }
 
     @Override
@@ -156,7 +117,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.TripsCardVie
         return trips.length;
     }
 
-    @SuppressLint("SimpleDateFormat")
+    /*@SuppressLint("SimpleDateFormat")
     private void getRideTime(String selectedRideTime) {
         try {
             if (selectedRideTime != null) {
@@ -184,10 +145,10 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.TripsCardVie
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(parentActivity, "Whatsapp is not installed.", Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 
     public interface ListItemClickListener {
-        void onListItemClick(Trip[] trips, int position);
+        void onListItemClick(Cab[] trips, int position);
     }
 
     class TripsCardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -207,13 +168,9 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.TripsCardVie
         @Override
         public void onClick(View view) {
             int itemPosition = getLayoutPosition();
-            if (trips[itemPosition].getStatus().equals("Completed") ||
-                    (trips[itemPosition].getStatus().equals("Sharing") && trips[itemPosition].getCab().getCarName() != null)) {
-                mOnClickListener.onListItemClick(trips, itemPosition);
-            } else if ((trips[itemPosition].getStatus().equals("Sharing") && trips[itemPosition].getCab().getCarName() == null)) {
-                getRideTime(trips[itemPosition].getCab().getStartTime());
-                shareViaWhatsapp(trips[itemPosition].getCab().getPickup(), trips[itemPosition].getCab().getDrop());
-            }
+            mOnClickListener.onListItemClick(trips, itemPosition);
+            //getRideTime(riders[itemPosition].getCab().getStartTime());
+            //shareViaWhatsapp(riders[itemPosition].getCab().getPickup(), riders[itemPosition].getCab().getDrop());
         }
     }
 }
