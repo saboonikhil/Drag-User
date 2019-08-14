@@ -6,33 +6,26 @@ public class Cab implements Serializable {
 
     private String _id;
     private boolean isAvailable;
-    private String tripId;
-    private String city;
+    private boolean isShared;
+    private String type;
     private String pickup;
     private String drop;
     private String startTime;
     private String endTime;
-    private String seats;
-    private String fare;
+    private Rider[] riders;
     private String driverName;
     private String driverContact;
     private String carName;
     private String carNumber;
 
-    public Cab(String city, String pickup, String drop, String startTime, String seats) {
-        this.city = city;
+    public Cab(String pickup, String drop, String startTime) {
         this.pickup = pickup;
         this.drop = drop;
         this.startTime = startTime;
-        this.seats = seats;
     }
 
     public String get_id() {
         return _id;
-    }
-
-    public String getCity() {
-        return city;
     }
 
     public String getPickup() {
@@ -51,12 +44,8 @@ public class Cab implements Serializable {
         return endTime;
     }
 
-    public String getSeats() {
-        return seats;
-    }
-
-    public void setSeats(String seats) {
-        this.seats = seats;
+    public String getType() {
+        return type;
     }
 
     public String getCarName() {
@@ -65,10 +54,6 @@ public class Cab implements Serializable {
 
     public String getCarNumber() {
         return carNumber;
-    }
-
-    public String getFare() {
-        return fare;
     }
 
     public String getDriverName() {
@@ -83,7 +68,11 @@ public class Cab implements Serializable {
         return isAvailable;
     }
 
-    public String getTripId() {
-        return tripId;
+    public boolean isShared() {
+        return isShared;
+    }
+
+    public Rider[] getRiders() {
+        return riders;
     }
 }

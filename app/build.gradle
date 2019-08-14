@@ -6,8 +6,8 @@ android {
         applicationId "com.drag.user"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 12
-        versionName "1.1.1"
+        versionCode 13
+        versionName "1.1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -18,7 +18,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField "String", "BASE_URL", "\"https://api.example.com\""
+            buildConfigField "String", "BASE_URL", "\"https://localhost:8443\""
             debuggable true
             signingConfig signingConfigs.debug
             applicationIdSuffix '.debug'

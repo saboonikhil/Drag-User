@@ -11,18 +11,16 @@ public class User implements Serializable {
     private String email;
     private String contact;
     private String alternateContact;
-    private Trip[] trips;
 
     private Boolean res;
     private String response;
     private LoginResponse token;
 
-    public User(String name, String email, String contact, String alternateContact, Trip[] trips) {
+    public User(String name, String email, String contact, String alternateContact) {
         this.name = name;
         this.email = email;
         this.contact = contact;
         this.alternateContact = alternateContact;
-        this.trips = trips;
     }
 
     public String get_id() {
@@ -71,9 +69,5 @@ public class User implements Serializable {
 
     public LoginResponse token() {
         return token;
-    }
-
-    public Trip[] getTrips() {
-        return trips;
     }
 }
