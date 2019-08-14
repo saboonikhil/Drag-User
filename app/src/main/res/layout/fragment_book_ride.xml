@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <!--<android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -60,7 +60,7 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>-->
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="@string/select_pickup" />
+                    android:text="@string/pickup_location" />
 
                 <AutoCompleteTextView
                     android:id="@+id/book_ride_pickup"
@@ -104,13 +104,12 @@
                     android:background="@drawable/border_text_view"
                     android:cursorVisible="false"
                     android:drawableStart="@drawable/ic_pickup"
-                    android:drawableEnd="@drawable/ic_expand"
                     android:drawablePadding="12dp"
                     android:inputType="textAutoComplete|text"
                     android:padding="16dp"
                     android:singleLine="true"
                     tools:ignore="LabelFor"
-                    tools:text="Vellore Institute Of Technology" />
+                    tools:text="Vellore" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -124,7 +123,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:paddingTop="4dp"
-                        android:text="@string/select_drop" />
+                        android:text="@string/drop_location" />
 
                     <ImageButton
                         android:id="@+id/book_ride_swap_location"
@@ -132,8 +131,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:contentDescription="@string/swap_location"
-                        android:src="@drawable/ic_swap"
-                        android:visibility="invisible" />
+                        android:src="@drawable/ic_swap" />
 
                 </LinearLayout>
 
@@ -148,13 +146,12 @@
                     android:background="@drawable/border_text_view"
                     android:cursorVisible="false"
                     android:drawableStart="@drawable/ic_drop"
-                    android:drawableEnd="@drawable/ic_expand"
                     android:drawablePadding="12dp"
                     android:inputType="textAutoComplete|text"
                     android:padding="16dp"
                     android:singleLine="true"
                     tools:ignore="LabelFor"
-                    tools:text="Bengaluru Airport" />
+                    tools:text="Bengaluru" />
 
             </LinearLayout>
 
@@ -264,7 +261,7 @@
 
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <!--<android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -320,7 +317,7 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>-->
 
     <Button
         android:id="@+id/book_ride_select"
@@ -332,7 +329,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
-        android:text="@string/select_ride"
+        android:text="@string/select_cab"
         android:textAllCaps="false" />
 
 </LinearLayout>
