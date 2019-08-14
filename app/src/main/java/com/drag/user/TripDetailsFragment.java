@@ -22,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.drag.user.model.Cab;
-import com.drag.user.model.Trip;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,11 +31,11 @@ import java.util.Date;
 public class TripDetailsFragment extends DialogFragment {
 
     private Activity parentActivity;
-    private Trip[] trips;
+    private Cab[] trips;
     private int position;
     private View rootView;
     private ImageButton backView;
-    private LinearLayout driverInfoView;
+    private LinearLayout cabInfoView, driverInfoView;
     private Button callView;
     private TextView startTimeView, driverNameView, driverContactView, carNameView, pickupView, dropView,
             idView, seatsView, carNumberView, fareView, statusView;
@@ -53,7 +52,7 @@ public class TripDetailsFragment extends DialogFragment {
         parentActivity = getActivity();
 
         if (getArguments() != null) {
-            trips = (Trip[]) getArguments().getSerializable("trip_details");
+            trips = (Cab[]) getArguments().getSerializable("trip_details");
             position = getArguments().getInt("position");
         }
 
@@ -74,11 +73,9 @@ public class TripDetailsFragment extends DialogFragment {
             }
         });
 
-        Cab trip = trips[position].getCab();
         try {
             Calendar calendar = Calendar.getInstance();
-            String startTime = trip.getStartTime();
-            Date displayTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(startTime);
+            Date displayTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(trips[position].getStartTime());
             calendar.setTime(displayTime);
             calendar.add(Calendar.HOUR, 5);
             calendar.add(Calendar.MINUTE, 30);
@@ -87,8 +84,8 @@ public class TripDetailsFragment extends DialogFragment {
             e.printStackTrace();
         }
 
-        String driverName = trip.getDriverName();
-        driverContact = trip.getDriverContact();
+        String driverName = trips[position].getDriverName();
+        driverContact = trips[position].getDriverContact();
         if (driverName != null && driverContact != null && driverName.length() >= 1 && driverContact.length() >= 1) {
             driverNameView.setText(driverName);
             driverContactView.setText(driverContact);
@@ -103,26 +100,21 @@ public class TripDetailsFragment extends DialogFragment {
             }
         });
 
-        carNameView.setText(trip.getCarName());
-        String carNumber = trip.getCarNumber();
-        if (carNumber == null || carNumber.length() < 1)
-            carNumberView.setVisibility(View.GONE);
-        else
+        String carName = trips[position].getCarName();
+        String carNumber = trips[position].getCarNumber();
+        if (carName != null && carNumber != null && carName.length() >= 1 && carNumber.length() >= 1) {
+            carNameView.setText(carName);
             carNumberView.setText(carNumber);
+        } else
+            cabInfoView.setVisibility(View.GONE);
 
-        pickupView.setText(trip.getPickup());
-        dropView.setText(trip.getDrop());
-        statusView.setText(trips[position].getStatus());
-
-        if (trips[position].getStatus().equals("Completed")) {
-            idView.setText(trip.getTripId());
-            seatsView.setText(trip.getSeats());
-            String displayFare = "₹ " + trip.getFare();
-            fareView.setText(displayFare);
-        } else if (trips[position].getStatus().equals("Sharing")) {
-            idView.setText(trips[position].getTravelDetails().getTripId());
-            seatsView.setText(trips[position].getTravelDetails().getSeats());
-            String displayFare = "₹ " + trips[position].getTravelDetails().getFare();
+        if (!trips[position].isShared()) {
+            idView.setText(trips[position].getRiders()[0].getTripId());
+            statusView.setText(trips[position].getRiders()[0].getTripStatus());
+            pickupView.setText(trips[position].getRiders()[0].getPickup());
+            dropView.setText(trips[position].getRiders()[0].getDrop());
+            seatsView.setText(trips[position].getRiders()[0].getSeats());
+            String displayFare = "₹ " + trips[position].getRiders()[0].getFare();
             fareView.setText(displayFare);
         }
     }
@@ -155,6 +147,7 @@ public class TripDetailsFragment extends DialogFragment {
     private void initViews() {
         backView = rootView.findViewById(R.id.trip_details_back);
         startTimeView = rootView.findViewById(R.id.trip_details_start_time);
+        cabInfoView = rootView.findViewById(R.id.trip_details_cab_info);
         driverInfoView = rootView.findViewById(R.id.trip_details_driver_info);
         driverNameView = rootView.findViewById(R.id.trip_details_driver_name);
         driverContactView = rootView.findViewById(R.id.trip_details_driver_contact);
