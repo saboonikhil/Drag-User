@@ -2,7 +2,6 @@ package com.drag.user.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -67,7 +66,7 @@ public class SelectRideAdapter extends RecyclerView.Adapter<SelectRideAdapter.Se
             e.printStackTrace();
         }
 
-        switch (rideList.get(position).getSeats()) {
+        /*switch (rideList.get(position).getSeats()) {
             case "1":
                 holder.statusView.setTextColor(Color.parseColor("#ff4c4c"));
                 String displayStatus1 = "1 Seat Left";
@@ -88,7 +87,7 @@ public class SelectRideAdapter extends RecyclerView.Adapter<SelectRideAdapter.Se
                 String displayStatus4 = "4 Seats Left";
                 holder.statusView.setText(displayStatus4);
                 break;
-        }
+        }*/
     }
 
     @Override

@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -21,7 +20,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,8 +35,6 @@ import com.drag.user.model.Cab;
 import com.drag.user.model.User;
 import com.drag.user.network.APIUtils;
 import com.drag.user.network.EndPointInterface;
-import com.drag.user.network.SelectRideResponse;
-import com.drag.user.network.SelectRideUtils;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
 
@@ -47,10 +43,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -181,7 +173,7 @@ public class SelectRideFragment extends BottomSheetDialogFragment implements Sel
     }
 
     private void getAvailableRideList() {
-        EndPointInterface service = APIUtils.getAPIService(parentActivity);
+        /*EndPointInterface service = APIUtils.getAPIService(parentActivity);
         Call<List<Cab>> call = service.userRideList(
                 user.getEmail(), token, travelDetails.getCity(), travelDetails.getPickup(),
                 travelDetails.getDrop(), travelDetails.getSeats(), travelDetails.getStartTime());
@@ -217,7 +209,7 @@ public class SelectRideFragment extends BottomSheetDialogFragment implements Sel
                     Toast.makeText(getContext(), "Couldn't refresh rides", Toast.LENGTH_LONG).show();
                 }
             }
-        });
+        });*/
     }
 
     private void generateDataList(List<Cab> rideList) {
@@ -282,7 +274,7 @@ public class SelectRideFragment extends BottomSheetDialogFragment implements Sel
         pd.setMessage("Joining...");
         pd.show();
         EndPointInterface service = APIUtils.getAPIService(parentActivity);
-        service.userJoinRide(user.get_id(), user.getEmail(), token, rideDetails.get_id(),
+        /*service.userJoinRide(user.get_id(), user.getEmail(), token, rideDetails.get_id(),
                 travelDetails.getSeats()).enqueue(new Callback<Cab>() {
             @Override
             public void onResponse(@NonNull Call<Cab> call, @NonNull Response<Cab> response) {
@@ -304,7 +296,7 @@ public class SelectRideFragment extends BottomSheetDialogFragment implements Sel
                 Log.e(TAG + " On Failure", t.getMessage());
                 pullAndRefresh();
             }
-        });
+        });*/
     }
 
     private void showSuccess() {
@@ -327,7 +319,7 @@ public class SelectRideFragment extends BottomSheetDialogFragment implements Sel
 
     private void requestRide() {
         View customView = getLayoutInflater().inflate(R.layout.layout_select_request, container, false);
-        TextView cityView = customView.findViewById(R.id.select_request_city);
+        /*TextView cityView = customView.findViewById(R.id.select_request_city);
         cityView.setText(travelDetails.getCity());
         TextView pickupView = customView.findViewById(R.id.select_request_pickup);
         pickupView.setText(travelDetails.getPickup());
@@ -340,7 +332,7 @@ public class SelectRideFragment extends BottomSheetDialogFragment implements Sel
         TextView nameView = customView.findViewById(R.id.select_request_name);
         nameView.setText(user.getName());
         TextView contactView = customView.findViewById(R.id.select_request_mobile_number);
-        contactView.setText(user.getContact());
+        contactView.setText(user.getContact());*/
 
         dialog = new AlertDialog.Builder(parentActivity)
                 .setView(customView)
@@ -375,7 +367,7 @@ public class SelectRideFragment extends BottomSheetDialogFragment implements Sel
         pd.setMessage("Sending...");
         pd.show();
         EndPointInterface service = APIUtils.getAPIService(parentActivity);
-        Call<User> call = service.requestRide(user.getEmail(), token, travelDetails.getCity(),
+        /*Call<User> call = service.requestRide(user.getEmail(), token, travelDetails.getCity(),
                 travelDetails.getPickup(), travelDetails.getDrop(), travelDetails.getStartTime(), travelDetails.getSeats());
         call.enqueue(new Callback<User>() {
             @Override
@@ -400,7 +392,7 @@ public class SelectRideFragment extends BottomSheetDialogFragment implements Sel
                 Log.e(TAG + " On Failure", t.getMessage());
                 Toast.makeText(getContext(), "Please check your internet connection or try again later.", Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
     }
 
     @SuppressLint("SimpleDateFormat")

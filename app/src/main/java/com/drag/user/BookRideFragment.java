@@ -378,20 +378,12 @@ public class BookRideFragment extends Fragment {
             myGrad.setStroke(2, Color.RED);
         } else {
             if (isConnectedToInternet()) {
-                Cab travelDetails = new Cab(city, pickup, drop, startTime, seats);
-                if (seats.equals("4")) {
-                    SelectCabFragment selectCab = new SelectCabFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("travel_details", travelDetails);
-                    selectCab.setArguments(bundle);
-                    selectCab.show(getChildFragmentManager(), "Select Cab");
-                } else {
-                    SelectRideFragment selectRide = new SelectRideFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("travel_details", travelDetails);
-                    selectRide.setArguments(bundle);
-                    selectRide.show(getChildFragmentManager(), "Select Ride");
-                }
+                Cab travelDetails = new Cab(pickup, drop, startTime);
+                SelectCabTypeFragment selectCab = new SelectCabTypeFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("travel_details", travelDetails);
+                selectCab.setArguments(bundle);
+                selectCab.show(getChildFragmentManager(), "Select Cab Type");
             } else {
                 Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
             }
