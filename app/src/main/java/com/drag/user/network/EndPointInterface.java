@@ -107,21 +107,12 @@ public interface EndPointInterface {
     );*/
 
     @GET("/api/cabs")
-    Call<List<Cab>> availableCabList(
+    Call<Cab[]> cabFareList(
             @Query("x_key") String key,
             @Query("token") String token,
-            @Query("city") String city,
             @Query("pickup") String pickup,
             @Query("drop") String drop,
-            @Query("seats") String seats,
             @Query("startTime") String startTime
-    );
-
-    @GET("/api/cabs/{cID}/checkCab")
-    Call<Cab> cabCheckAvailable(
-            @Path("cID") String cID,
-            @Query("x_key") String key,
-            @Query("token") String token
     );
 
     @POST("/api/users/{uID}/generateChecksum")

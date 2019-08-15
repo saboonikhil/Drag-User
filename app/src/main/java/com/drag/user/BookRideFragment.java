@@ -66,7 +66,6 @@ public class BookRideFragment extends Fragment {
         return rootView;
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

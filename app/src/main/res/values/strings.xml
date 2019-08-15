@@ -49,7 +49,6 @@
     <string name="select_ride">Select Ride</string>
     <string name="select_ride_note">Note: Fare will vary as seats get filled</string>
     <string name="swipe_up_to_see_more">Swipe up to see more</string>
-    <string name="sedan">Sedan</string>
     <string name="no_rides_available_now">No Rides Available Now !</string>
     <string name="close">Close</string>
     <string name="select_ride_rules">\u00201. The selected ride will be active for 72 hours before its start time.\n\n
@@ -63,10 +62,13 @@
     <string name="share_via_whatsapp">Share via Whatsapp</string>
     <string name="join">JOIN</string>
 
-    <!-- Strings related to Select Cab -->
+    <!-- Strings related to Select Cab Type -->
     <string name="select_cab">Select Cab</string>
     <string name="no_cabs_available_now">No Cabs Available Now !</string>
     <string name="please_check_after_sometime">Please check after some time.</string>
+    <string name="cab_type">Cab Type</string>
+    <string name="sedan">Sedan</string>
+    <string name="suv">SUV</string>
 
     <!-- Strings related to Confirm Ride -->
     <string name="confirm_ride">Confirm Ride</string>

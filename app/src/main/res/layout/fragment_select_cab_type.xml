@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     app:behavior_hideable="true"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/select_cab_collapsed_action_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -109,9 +107,9 @@
             android:contentDescription="@string/close"
             app:srcCompat="@drawable/ic_close" />
 
-    </LinearLayout>
+    </LinearLayout>-->
 
-    <com.facebook.shimmer.ShimmerFrameLayout
+    <!--<com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/select_cab_shimmer_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -141,24 +139,21 @@
 
         </LinearLayout>
 
-    </com.facebook.shimmer.ShimmerFrameLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>-->
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/select_cab_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
+
+    <!--<android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/select_cab_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/select_cab_expanded_action_bar"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/select_cab_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:scrollbars="vertical"
-            android:scrollingCache="true" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>-->
 
     <RelativeLayout
         android:id="@+id/select_cab_empty_layout"
@@ -167,21 +162,20 @@
         android:layout_centerInParent="true"
         android:visibility="gone">
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/select_cab_empty_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/no_cabs_available_now"
-            app:srcCompat="@drawable/ic_empty_select" />
+            app:srcCompat="@drawable/ic_empty_select" />-->
 
         <TextView
             android:id="@+id/select_cab_empty_message1"
             style="@style/TextStyle16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/select_cab_empty_image"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="32dp"
             android:text="@string/no_cabs_available_now" />
 
         <TextView
@@ -192,35 +186,9 @@
             android:layout_below="@+id/select_cab_empty_message1"
             android:layout_centerInParent="true"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
             android:text="@string/please_check_after_sometime" />
 
     </RelativeLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/select_cab_request"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:tint="@android:color/white"
-        app:backgroundTint="@color/colorPrimary"
-        app:fabSize="normal"
-        app:rippleColor="@android:color/white"
-        app:srcCompat="@drawable/ic_add"
-        app:useCompatPadding="true" />
-
-    <Button
-        android:id="@+id/select_cab_button"
-        style="@style/TextStyle7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        android:text="@string/confirm_ride"
-        android:textAllCaps="false"
-        android:visibility="gone" />
 
 </RelativeLayout>
