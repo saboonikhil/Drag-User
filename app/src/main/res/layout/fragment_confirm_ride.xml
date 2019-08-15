@@ -82,12 +82,12 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/confirm_ride_car_name"
+                        android:id="@+id/confirm_ride_type"
                         style="@style/TextStyle19"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        tools:text="Maruti Suzuki Swift Dzire" />
+                        tools:text="Sedan" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -140,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/your_details" />
 
-                    <LinearLayout
+                    <!--<LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -160,7 +160,7 @@
                             android:layout_marginTop="8dp"
                             tools:text="Vellore" />
 
-                    </LinearLayout>
+                    </LinearLayout>-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -180,7 +180,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            tools:text="Vellore Institute Of Technology" />
+                            tools:text="Vellore" />
 
                     </LinearLayout>
 
@@ -202,7 +202,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            tools:text="Bengaluru Airport" />
+                            tools:text="Bengaluru" />
 
                     </LinearLayout>
 

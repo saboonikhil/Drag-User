@@ -2,29 +2,22 @@ package com.drag.user;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.drag.user.model.Cab;
 import com.drag.user.model.User;
-import com.drag.user.network.APIUtils;
-import com.drag.user.network.EndPointInterface;
 import com.google.gson.Gson;
 
 import java.text.ParseException;
@@ -32,24 +25,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import static android.content.Context.MODE_PRIVATE;
 
 public class ConfirmRideFragment extends DialogFragment {
 
-    private static String TAG = ConfirmRideFragment.class.getSimpleName();
     private Activity parentActivity;
     private View rootView;
-    private String token, carName, pickup, drop, startTime, seats, fare;
-    private User user;
+    private Cab selectedCabType;
+    private String pickup, drop, startTime;
     private ImageButton backView;
-    private TextView cityView, pickupView, dropView, startTimeView, carNameView, seatsView, fareView, nameView, contactView;
+    private TextView pickupView, dropView, startTimeView, typeView, seatsView, fareView, nameView, contactView;
     private Button confirmRideView;
-    private Cab selectedCab;
-    private ProgressDialog pd;
     private DialogInterface.OnDismissListener onDismissListener;
 
     @Override
@@ -63,13 +49,10 @@ public class ConfirmRideFragment extends DialogFragment {
         parentActivity = getActivity();
 
         if (getArguments() != null) {
-            selectedCab = (Cab) getArguments().getSerializable("selected_cab");
+            selectedCabType = (Cab) getArguments().getSerializable("selected_cab_type");
             pickup = getArguments().getString("pickup");
             drop = getArguments().getString("drop");
             startTime = getArguments().getString("startTime");
-            carName = selectedCab.getCarName();
-            seats = selectedCab.getSeats();
-            fare = selectedCab.getFare();
         }
 
         rootView = inflater.inflate(R.layout.fragment_confirm_ride, container, false);
@@ -89,9 +72,8 @@ public class ConfirmRideFragment extends DialogFragment {
         });
 
         SharedPreferences pref = parentActivity.getSharedPreferences("AppPref", MODE_PRIVATE);
-        token = pref.getString("token", "");
         String json = pref.getString("dbObj", "");
-        user = new Gson().fromJson(json, User.class);
+        User user = new Gson().fromJson(json, User.class);
 
         try {
             Calendar calendar = Calendar.getInstance();
@@ -104,69 +86,35 @@ public class ConfirmRideFragment extends DialogFragment {
             e.printStackTrace();
         }
 
-        cityView.setText(selectedCab.getCity());
         pickupView.setText(pickup);
         dropView.setText(drop);
-        carNameView.setText(carName);
-        seatsView.setText(seats);
+        typeView.setText(selectedCabType.getType());
+
+        if (selectedCabType.getType().equals("Sedan")) {
+            seatsView.setText("4");
+        } else if (selectedCabType.getType().equals("SUV")) {
+            seatsView.setText("6");
+        }
+
         nameView.setText(user.getName());
         contactView.setText(user.getContact());
 
-        String displayFare = "₹ " + fare;
+        String displayFare = "₹ " + selectedCabType.getCarNumber();
         fareView.setText(displayFare);
 
-        String displayPayment = "PROCEED TO PAY " + "₹" + fare;
+        String displayPayment = "PROCEED TO PAY " + "₹" + selectedCabType.getCarNumber();
         confirmRideView.setText(displayPayment);
 
         confirmRideView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pd = new ProgressDialog(getContext());
-                pd.setMessage("Checking cab availability...");
-                pd.show();
-
-                EndPointInterface service = APIUtils.getAPIService(parentActivity);
-                service.cabCheckAvailable(selectedCab.get_id(), user.getEmail(), token).enqueue(new Callback<Cab>() {
-                    @Override
-                    public void onResponse(@NonNull Call<Cab> call, @NonNull Response<Cab> response) {
-                        if (response.errorBody() != null) {
-                            pd.cancel();
-                            dismiss();
-                            Toast.makeText(getContext(), "Sorry, cab unavailable now! Please select another cab.", Toast.LENGTH_LONG).show();
-                        } else if (response.body() != null) {
-                            if (response.body().isAvailable()) {
-                                Intent intent = new Intent(parentActivity, PaymentActivity.class);
-                                intent.putExtra("confirmed_ride_details", selectedCab);
-                                intent.putExtra("pickup", pickup);
-                                intent.putExtra("drop", drop);
-                                intent.putExtra("startTime", startTime);
-                                intent.putExtra("seats", seats);
-                                intent.putExtra("fare", fare);
-                                parentActivity.startActivity(intent);
-                                dismiss();
-                                pd.cancel();
-                            } else {
-                                pd.cancel();
-                                dismiss();
-                                Toast.makeText(getContext(), "Sorry, cab unavailable now!", Toast.LENGTH_SHORT).show();
-                                Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(getContext(), "Please select another cab", Toast.LENGTH_SHORT).show();
-                                    }
-                                }, 2000);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<Cab> call, @NonNull Throwable t) {
-                        pd.cancel();
-                        Log.e(TAG + " On Failure", t.getMessage());
-                        Snackbar.make(rootView, "Please check your internet connection or try again later.", Snackbar.LENGTH_LONG).show();
-                    }
-                });
+                Intent intent = new Intent(parentActivity, PaymentActivity.class);
+                intent.putExtra("confirmed_ride_details", selectedCabType);
+                intent.putExtra("pickup", pickup);
+                intent.putExtra("drop", drop);
+                intent.putExtra("startTime", startTime);
+                parentActivity.startActivity(intent);
+                dismiss();
             }
         });
     }
@@ -185,11 +133,10 @@ public class ConfirmRideFragment extends DialogFragment {
 
     private void initViews() {
         backView = rootView.findViewById(R.id.confirm_ride_back);
-        cityView = rootView.findViewById(R.id.confirm_ride_city);
         pickupView = rootView.findViewById(R.id.confirm_ride_pickup);
         dropView = rootView.findViewById(R.id.confirm_ride_drop);
         startTimeView = rootView.findViewById(R.id.confirm_ride_start_time);
-        carNameView = rootView.findViewById(R.id.confirm_ride_car_name);
+        typeView = rootView.findViewById(R.id.confirm_ride_type);
         seatsView = rootView.findViewById(R.id.confirm_ride_seats);
         fareView = rootView.findViewById(R.id.confirm_ride_fare);
         nameView = rootView.findViewById(R.id.confirm_ride_name);
