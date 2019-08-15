@@ -99,7 +99,7 @@ public class HelpFragment extends DialogFragment {
         if (feedbackText.length() > 40)
             pushFeedback();
         else
-            Toast.makeText(getContext(), "Feedback must be of minimum length 40 characters", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Feedback must be at least 40 characters long", Toast.LENGTH_LONG).show();
     }
 
     private void pushFeedback() {
