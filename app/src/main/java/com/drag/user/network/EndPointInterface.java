@@ -121,30 +121,19 @@ public interface EndPointInterface {
             @Path("uID") String uID,
             @Query("x_key") String key,
             @Query("token") String token,
-            @Field("cabBooked") String cID
+            @Field("cabTypeSelected") String cID
     );
 
     @POST("/api/users/{uID}/createTrip")
     @FormUrlEncoded
-    Call<Trip> createTrip(
+    Call<Cab> createTrip(
             @Path("uID") String uID,
             @Query("x_key") String key,
             @Query("token") String token,
-            @Field("cabBooked") String cID,
+            @Field("cabTypeSelected") String cID,
             @Field("pickup") String pickup,
             @Field("drop") String drop,
             @Field("startTime") String startTime,
-            @Field("seats") String seats,
-            @Field("fare") String fare,
-            @Field("orderId") String oID
-    );
-
-    @PUT("/api/cabs/{cID}/makeCab")
-    @FormUrlEncoded
-    Call<Cab> cabMakeAvailable(
-            @Path("cID") String cID,
-            @Query("x_key") String key,
-            @Query("token") String token,
             @Field("orderId") String oID
     );
 

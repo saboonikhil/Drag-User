@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.drag.user.model.Cab;
 import com.drag.user.model.Paytm;
-import com.drag.user.model.Trip;
 import com.drag.user.model.User;
 import com.drag.user.network.APIUtils;
 import com.drag.user.network.EndPointInterface;
@@ -31,10 +30,9 @@ import retrofit2.Response;
 public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTransactionCallback {
 
     private String TAG = PaymentActivity.class.getSimpleName();
-    private String token;
+    private String token, pickup, drop, startTime, orderId;
     private User user;
-    private Cab cabBooked;
-    private String pickup, drop, startTime, seats, fare, orderId;
+    private Cab cabTypeSelected;
     private TextView messageView;
 
     @Override
@@ -49,19 +47,17 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
         user = new Gson().fromJson(json, User.class);
 
         Intent intent = getIntent();
-        cabBooked = (Cab) intent.getSerializableExtra("confirmed_ride_details");
+        cabTypeSelected = (Cab) intent.getSerializableExtra("confirmed_ride_details");
         pickup = intent.getStringExtra("pickup");
         drop = intent.getStringExtra("drop");
         startTime = intent.getStringExtra("startTime");
-        seats = intent.getStringExtra("seats");
-        fare = intent.getStringExtra("fare");
 
         generateCheckSum();
     }
 
     private void generateCheckSum() {
         EndPointInterface service = APIUtils.getAPIService(PaymentActivity.this);
-        service.generateChecksum(user.get_id(), user.getEmail(), token, cabBooked.get_id()).enqueue(new Callback<Paytm>() {
+        service.generateChecksum(user.get_id(), user.getEmail(), token, cabTypeSelected.get_id()).enqueue(new Callback<Paytm>() {
             @Override
             public void onResponse(@NonNull Call<Paytm> call, @NonNull Response<Paytm> response) {
                 if (response.body() != null) {
@@ -72,7 +68,8 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
             @Override
             public void onFailure(@NonNull Call<Paytm> call, @NonNull Throwable t) {
                 Log.e(TAG + " On Failure", t.getMessage());
-                Toast.makeText(getApplicationContext(), "Please check your internet connection or try again later.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),
+                        "Please check your internet connection or try again later.", Toast.LENGTH_LONG).show();
                 finish();
             }
         });
@@ -109,60 +106,55 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
 
     @Override
     public void networkNotAvailable() {
-        makeCabAvailable();
         Toast.makeText(this, "Network error", Toast.LENGTH_LONG).show();
         finish();
     }
 
     @Override
     public void clientAuthenticationFailed(String s) {
-        makeCabAvailable();
         Toast.makeText(this, s, Toast.LENGTH_LONG).show();
         finish();
     }
 
     @Override
     public void someUIErrorOccurred(String s) {
-        makeCabAvailable();
         Toast.makeText(this, s, Toast.LENGTH_LONG).show();
         finish();
     }
 
     @Override
     public void onErrorLoadingWebPage(int i, String s, String s1) {
-        makeCabAvailable();
         Toast.makeText(this, s, Toast.LENGTH_LONG).show();
         finish();
     }
 
     @Override
     public void onBackPressedCancelTransaction() {
-        makeCabAvailable();
         finish();
     }
 
     @Override
     public void onTransactionCancel(String s, Bundle bundle) {
-        makeCabAvailable();
         Toast.makeText(this, s + bundle.toString(), Toast.LENGTH_LONG).show();
         finish();
     }
 
     private void verifyTransactionStatus() {
         EndPointInterface service = APIUtils.getAPIService(PaymentActivity.this);
-        service.createTrip(user.get_id(), user.getEmail(), token, cabBooked.get_id(), pickup, drop,
-                startTime, seats, fare, orderId).enqueue(new Callback<Trip>() {
+        service.createTrip(user.get_id(), user.getEmail(), token, cabTypeSelected.get_id(), pickup, drop,
+                startTime, orderId).enqueue(new Callback<Cab>() {
             @Override
-            public void onResponse(@NonNull Call<Trip> call, @NonNull Response<Trip> response) {
+            public void onResponse(@NonNull Call<Cab> call, @NonNull Response<Cab> response) {
                 if (response.body() != null) {
-                    displayTransactionStatus(response.body().getStatus());
+                    displayTransactionStatus(response.body().getRiders()[0].getTripStatus());
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<Trip> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Cab> call, @NonNull Throwable t) {
                 Log.e(TAG + " On Failure", t.getMessage());
-                Toast.makeText(getApplicationContext(), "Low internet connectivity! Contact help desk with booking details.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),
+                        "Low internet connectivity! Contact help desk with booking details.", Toast.LENGTH_LONG).show();
                 finish();
             }
         });
@@ -170,7 +162,7 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
 
     private void displayTransactionStatus(String status) {
         switch (status) {
-            case "Completed":
+            case "Payment Successful":
                 setContentView(R.layout.layout_payment_success);
                 ImageButton successBackView = findViewById(R.id.payment_success_back);
                 successBackView.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +172,7 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
                     }
                 });
                 break;
-            case "Failed":
+            case "Payment Failed":
                 setContentView(R.layout.layout_payment_failed);
                 ImageButton failedBackView = findViewById(R.id.payment_failed_back);
                 failedBackView.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +182,7 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
                     }
                 });
                 break;
-            case "Pending":
+            case "Payment In Process":
                 setContentView(R.layout.layout_payment_pending);
                 ImageButton pendingBackView = findViewById(R.id.payment_pending_back);
                 pendingBackView.setOnClickListener(new View.OnClickListener() {
@@ -200,29 +192,23 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
                     }
                 });
                 break;
+
+            default:
+                setContentView(R.layout.layout_payment_pending);
+                ImageButton pendingBack1View = findViewById(R.id.payment_pending_back);
+                pendingBack1View.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+                break;
         }
-    }
-
-    private void makeCabAvailable() {
-        EndPointInterface service = APIUtils.getAPIService(PaymentActivity.this);
-        service.cabMakeAvailable(cabBooked.get_id(), user.getEmail(), token, orderId).enqueue(new Callback<Cab>() {
-            @Override
-            public void onResponse(@NonNull Call<Cab> call, @NonNull Response<Cab> response) {
-                if (response.isSuccessful())
-                    Log.i(TAG, "Cab ID: " + cabBooked.get_id() + " is available now");
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Cab> call, @NonNull Throwable t) {
-                Log.e(TAG + " On Failure", t.getMessage());
-            }
-        });
     }
 
     @Override
     public void onBackPressed() {
         if (messageView.getVisibility() != View.GONE) {
-            makeCabAvailable();
             finish();
         } else
             super.onBackPressed();
