@@ -18,7 +18,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.drag.user.adapter.SelectCabTypeAdapter;
@@ -42,6 +44,9 @@ public class SelectCabTypeFragment extends BottomSheetDialogFragment implements 
     private String token;
     private User user;
     private Cab travelDetails;
+    private ProgressBar progressBar;
+    private TextView rulesView;
+    private SelectCabTypeAdapter selectCabTypeAdapter;
     private RecyclerView recyclerView;
     private RelativeLayout emptyView;
 
@@ -99,9 +104,11 @@ public class SelectCabTypeFragment extends BottomSheetDialogFragment implements 
     @Override
     public void onResume() {
         super.onResume();
-        if (isConnectedToInternet())
+        if (isConnectedToInternet()) {
             getAvailableCabList();
-        else
+            if (selectCabTypeAdapter == null)
+                progressBar.setVisibility(View.VISIBLE);
+        } else
             Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
     }
 
@@ -124,6 +131,7 @@ public class SelectCabTypeFragment extends BottomSheetDialogFragment implements 
             @Override
             public void onResponse(@NonNull Call<Cab[]> call, @NonNull Response<Cab[]> response) {
                 if (response.body() != null) {
+                    progressBar.setVisibility(View.GONE);
                     generateDataList(response.body(), travelDetails);
                 }
             }
@@ -131,6 +139,7 @@ public class SelectCabTypeFragment extends BottomSheetDialogFragment implements 
             @Override
             public void onFailure(@NonNull Call<Cab[]> call, @NonNull Throwable t) {
                 Log.e(TAG + " On Failure", t.getMessage());
+                progressBar.setVisibility(View.GONE);
                 /*if (refreshCount == 1) {
                     shimmerView.stopShimmerAnimation();
                     shimmerView.setVisibility(View.GONE);
@@ -144,7 +153,8 @@ public class SelectCabTypeFragment extends BottomSheetDialogFragment implements 
     }
 
     private void generateDataList(Cab[] cabFareList, Cab travelDetails) {
-        recyclerView.setAdapter(new SelectCabTypeAdapter(getContext(), cabFareList, travelDetails, this));
+        selectCabTypeAdapter = new SelectCabTypeAdapter(getContext(), cabFareList, travelDetails, this);
+        recyclerView.setAdapter(selectCabTypeAdapter);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -154,6 +164,23 @@ public class SelectCabTypeFragment extends BottomSheetDialogFragment implements 
         } else {
             emptyView.setVisibility(View.INVISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
+
+            String sedanDistanceLimit = "", suvDistanceLimit = "";
+
+            for (Cab cab : cabFareList) {
+                if (cab.getType().equals("Sedan"))
+                    sedanDistanceLimit = cab.getDriverName();
+                else if (cab.getType().equals("SUV"))
+                    suvDistanceLimit = cab.getDriverName();
+            }
+
+            String selectCabTypeRules = "✪  One way trip of about " + cabFareList[0].getCarName() + " km includes toll charges if any.\n\n" +
+                    "✪  Distance exceeding " + cabFareList[0].getCarName() + " km is chargeable at ₹" +
+                    sedanDistanceLimit + "/km for Sedan and ₹" + suvDistanceLimit + "/km for SUV.\n\n" +
+                    "✪  Fare for extra distance to be paid to the driver in cash.\n";
+
+            rulesView.setText(selectCabTypeRules);
+            rulesView.setBackgroundColor(getResources().getColor(R.color.bg_select_cab_pressed));
         }
     }
 
@@ -195,6 +222,8 @@ public class SelectCabTypeFragment extends BottomSheetDialogFragment implements 
         dropView = rootView.findViewById(R.id.select_cab_drop);
         shimmerView = rootView.findViewById(R.id.select_cab_shimmer_layout);
         refreshLayout = rootView.findViewById(R.id.select_cab_refresh_layout);*/
+        progressBar = rootView.findViewById(R.id.select_cab_type_progress_bar);
+        rulesView = rootView.findViewById(R.id.select_cab_type_rules);
         recyclerView = rootView.findViewById(R.id.select_cab_recycler_view);
         emptyView = rootView.findViewById(R.id.select_cab_empty_layout);
     }

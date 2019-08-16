@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
     app:behavior_hideable="true"
     app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <ProgressBar
+        android:id="@+id/select_cab_type_progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/select_cab_type_rules"
+        style="@style/TextStyle15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:textSize="12sp"
+        tools:background="@color/bg_select_cab_pressed"
+        tools:text="@string/select_cab_type_rules" />
 
     <!--<LinearLayout
         android:id="@+id/select_cab_collapsed_action_bar"
@@ -145,6 +166,7 @@
         android:id="@+id/select_cab_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/select_cab_type_rules"
         android:orientation="horizontal" />
 
     <!--<android.support.v4.widget.SwipeRefreshLayout
@@ -162,19 +184,21 @@
         android:layout_centerInParent="true"
         android:visibility="gone">
 
-        <!--<ImageView
+        <ImageView
             android:id="@+id/select_cab_empty_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
             android:contentDescription="@string/no_cabs_available_now"
-            app:srcCompat="@drawable/ic_empty_select" />-->
+            app:srcCompat="@drawable/ic_empty_select" />
 
         <TextView
             android:id="@+id/select_cab_empty_message1"
             style="@style/TextStyle16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/select_cab_empty_image"
             android:layout_marginTop="32dp"
             android:text="@string/no_cabs_available_now" />
 

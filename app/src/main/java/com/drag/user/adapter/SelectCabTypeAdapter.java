@@ -1,6 +1,5 @@
 package com.drag.user.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -45,7 +44,6 @@ public class SelectCabTypeAdapter extends RecyclerView.Adapter<SelectCabTypeAdap
         return new SelectCabHolder(view);
     }
 
-    @SuppressLint("SimpleDateFormat")
     @Override
     public void onBindViewHolder(@NonNull SelectCabHolder holder, int position) {
         holder.rootView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
@@ -54,10 +52,12 @@ public class SelectCabTypeAdapter extends RecyclerView.Adapter<SelectCabTypeAdap
             holder.typeView.setText(R.string.sedan);
             holder.seatsView.setText("4");
             holder.iconView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_sedan));
+            holder.carNameView.setText(R.string.sedan_cars);
         } else if (cabFareList[position].getType().equals("SUV")) {
             holder.typeView.setText(R.string.suv);
             holder.seatsView.setText("6");
             holder.iconView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_suv));
+            holder.carNameView.setText(R.string.suv_cars);
         }
 
         String displayFare = "₹ " + cabFareList[position].getCarNumber();
@@ -80,15 +80,16 @@ public class SelectCabTypeAdapter extends RecyclerView.Adapter<SelectCabTypeAdap
     class SelectCabHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private CardView rootView;
         private ImageView iconView;
-        private TextView typeView, seatsView, fareView;
+        private TextView typeView, seatsView, fareView, carNameView;
 
         SelectCabHolder(View itemView) {
             super(itemView);
             rootView = itemView.findViewById(R.id.select_cab_layout);
             iconView = itemView.findViewById(R.id.select_cab_type_icon);
             typeView = itemView.findViewById(R.id.select_cab_type_name);
-            seatsView = itemView.findViewById(R.id.select_cab_seats);
-            fareView = itemView.findViewById(R.id.select_cab_fare);
+            seatsView = itemView.findViewById(R.id.select_cab_type_seats);
+            carNameView = itemView.findViewById(R.id.select_cab_type_car_name);
+            fareView = itemView.findViewById(R.id.select_cab_type_fare);
             itemView.setOnClickListener(this);
         }
 
