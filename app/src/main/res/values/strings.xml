@@ -108,16 +108,20 @@
     <string name="payment_in_process">Payment In Process</string>
     <string name="payment_failed">Payment Failed</string>
     <string name="trip_cancelled">Trip Cancelled</string>
+    <string name="trip_confirmed">Trip Confirmed</string>
 
     <!-- Strings related to Trip details -->
     <string name="driver_info">Driver Info</string>
     <string name="cab_info">Cab Info</string>
     <string name="location_info">Location Info</string>
+    <string name="payment_info">Payment Info</string>
     <string name="booking_status">Booking Status</string>
     <string name="no_of_seats">No of Seats</string>
     <string name="pickup_">Pickup:</string>
     <string name="drop_">Drop:</string>
     <string name="booking_id">Booking ID</string>
+    <string name="amount_paid">Amount Paid</string>
+    <string name="pending_payable_amount">Pending Payable Amount</string>
 
     <!-- Strings related to Account -->
     <string name="help">Help</string>

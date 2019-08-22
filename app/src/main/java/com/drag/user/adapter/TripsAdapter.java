@@ -50,18 +50,22 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.TripsCardVie
 
         holder.pickupView.setText(trips[position].getPickup());
         holder.dropView.setText(trips[position].getDrop());
+        String displayFare = "₹" + trips[position].getFare();
+        holder.fareView.setText(displayFare);
 
         if (!trips[position].isShared()) {
             holder.idView.setText(trips[position].getRiders()[0].getTripId());
             holder.pickupView.setText(trips[position].getRiders()[0].getPickup());
             holder.dropView.setText(trips[position].getRiders()[0].getDrop());
-            String displayFare = "₹ " + trips[position].getRiders()[0].getFare();
-            holder.fareView.setText(displayFare);
 
             switch (trips[position].getRiders()[0].getTripStatus()) {
                 case "Payment Successful":
                     holder.statusView.setBackgroundColor(Color.parseColor("#507dff"));
                     holder.statusView.setText(R.string.payment_successful);
+                    break;
+                case "Trip Confirmed":
+                    holder.statusView.setBackgroundColor(Color.parseColor("#edaf02"));
+                    holder.statusView.setText(R.string.trip_confirmed);
                     break;
                 case "Payment In Process":
                     holder.statusView.setBackgroundColor(Color.parseColor("#edaf02"));
@@ -75,7 +79,6 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.TripsCardVie
                     holder.statusView.setBackgroundColor(Color.parseColor("#ff4c4c"));
                     holder.statusView.setText(R.string.trip_cancelled);
                     break;
-
                 default:
                     holder.statusView.setBackgroundColor(Color.parseColor("#edaf02"));
                     holder.statusView.setText(R.string.payment_in_process);

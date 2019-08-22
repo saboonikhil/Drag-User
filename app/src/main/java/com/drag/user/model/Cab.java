@@ -12,6 +12,7 @@ public class Cab implements Serializable {
     private String drop;
     private String startTime;
     private String endTime;
+    private String fare;
     private Rider[] riders;
     private String driverName;
     private String driverContact;
@@ -74,5 +75,9 @@ public class Cab implements Serializable {
 
     public Rider[] getRiders() {
         return riders;
+    }
+
+    public String getFare() {
+        return fare;
     }
 }

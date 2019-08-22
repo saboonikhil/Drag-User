@@ -38,7 +38,7 @@ public class TripDetailsFragment extends DialogFragment {
     private LinearLayout cabInfoView, driverInfoView;
     private Button callView;
     private TextView startTimeView, driverNameView, driverContactView, carNameView, pickupView, dropView,
-            idView, seatsView, carNumberView, fareView, statusView;
+            idView, seatsView, carNumberView, fareView, statusView, amountPaidView, amountPendingView;
     private String driverContact;
 
     @Override
@@ -108,14 +108,23 @@ public class TripDetailsFragment extends DialogFragment {
         } else
             cabInfoView.setVisibility(View.GONE);
 
+        String displayFare = "₹" + trips[position].getFare();
+        fareView.setText(displayFare);
+
+        float fare = Float.parseFloat(trips[position].getFare());
+        float amountPaid = Float.parseFloat(trips[position].getRiders()[0].getFare());
+
         if (!trips[position].isShared()) {
             idView.setText(trips[position].getRiders()[0].getTripId());
             statusView.setText(trips[position].getRiders()[0].getTripStatus());
             pickupView.setText(trips[position].getRiders()[0].getPickup());
             dropView.setText(trips[position].getRiders()[0].getDrop());
             seatsView.setText(trips[position].getRiders()[0].getSeats());
-            String displayFare = "₹ " + trips[position].getRiders()[0].getFare();
-            fareView.setText(displayFare);
+
+            String displayAmountPaid = "- ₹" + trips[position].getRiders()[0].getFare();
+            amountPaidView.setText(displayAmountPaid);
+            String displayAmountPending = "₹" + String.format(java.util.Locale.US, "%.2f", (fare - amountPaid));
+            amountPendingView.setText(displayAmountPending);
         }
     }
 
@@ -160,5 +169,7 @@ public class TripDetailsFragment extends DialogFragment {
         idView = rootView.findViewById(R.id.trip_details_id);
         seatsView = rootView.findViewById(R.id.trip_details_seats);
         fareView = rootView.findViewById(R.id.trip_details_fare);
+        amountPaidView = rootView.findViewById(R.id.trip_details_amount_paid);
+        amountPendingView = rootView.findViewById(R.id.trip_details_amount_pending);
     }
 }
