@@ -30,9 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences pref;
     private String token;
     private User user;
-    private TextView titleView;
-    private ImageButton notificationsView;
-    private ImageButton bookRideView;
+    private TextView titleView, tripsTitleView, accountTitleView;
+    private ImageButton notificationsView, bookRideView, tripsButtonView, accountButtonView;
     private LinearLayout tripsView, accountView;
     private int count = 0;
 
@@ -59,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 displaySelectedScreen(R.id.main_book_ride);
+                tripsButtonView.setColorFilter(getResources().getColor(R.color.warm_grey));
+                tripsTitleView.setTextColor(getResources().getColor(R.color.warm_grey));
+                accountButtonView.setColorFilter(getResources().getColor(R.color.warm_grey));
+                accountTitleView.setTextColor(getResources().getColor(R.color.warm_grey));
             }
         });
 
@@ -66,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 displaySelectedScreen(R.id.main_trips);
+                tripsButtonView.setColorFilter(getResources().getColor(R.color.lightish_blue));
+                tripsTitleView.setTextColor(getResources().getColor(R.color.lightish_blue));
+                accountButtonView.setColorFilter(getResources().getColor(R.color.warm_grey));
+                accountTitleView.setTextColor(getResources().getColor(R.color.warm_grey));
             }
         });
 
@@ -73,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 displaySelectedScreen(R.id.main_account);
+                accountButtonView.setColorFilter(getResources().getColor(R.color.lightish_blue));
+                accountTitleView.setTextColor(getResources().getColor(R.color.lightish_blue));
+                tripsButtonView.setColorFilter(getResources().getColor(R.color.warm_grey));
+                tripsTitleView.setTextColor(getResources().getColor(R.color.warm_grey));
             }
         });
 
@@ -82,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getAuthLocations() {
         EndPointInterface service = APIUtils.getAPIService(MainActivity.this);
-        service.authLocation(user.getEmail(), token).enqueue(new Callback<Location[]>() {
+        service.authLocation(user.getEmail(), token, com.drag.user.BuildConfig.VERSION_CODE).enqueue(new Callback<Location[]>() {
             @Override
             public void onResponse(@NonNull Call<Location[]> call, @NonNull Response<Location[]> response) {
                 if (response.code() == 401) {
@@ -91,6 +102,16 @@ public class MainActivity extends AppCompatActivity {
                     pref.edit().remove("dbObj").apply();
                     Toast.makeText(getApplicationContext(),
                             "Your account is blocked. Please contact help desk for recovery.", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i);
+                    finish();
+                } else if (response.code() == 403) {
+                    pref.edit().remove("token").apply();
+                    pref.edit().remove("expires").apply();
+                    pref.edit().remove("dbObj").apply();
+                    Toast.makeText(getApplicationContext(),
+                            "Please update the app with the latest version from the play store.", Toast.LENGTH_LONG).show();
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
@@ -154,6 +175,10 @@ public class MainActivity extends AppCompatActivity {
         notificationsView = findViewById(R.id.main_notifications);
         bookRideView = findViewById(R.id.main_book_ride);
         tripsView = findViewById(R.id.main_trips);
+        tripsButtonView = findViewById(R.id.main_trips_button);
+        tripsTitleView = findViewById(R.id.main_trips_title);
+        accountButtonView = findViewById(R.id.main_account_button);
+        accountTitleView = findViewById(R.id.main_account_title);
         accountView = findViewById(R.id.main_account);
     }
 }
