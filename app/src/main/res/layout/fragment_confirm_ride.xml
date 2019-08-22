@@ -223,6 +223,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="4dp"
+                android:textSize="12sp"
                 android:text="@string/select_payment_mode" />
 
             <LinearLayout
@@ -256,7 +257,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/advance_amount"
                             android:textAllCaps="true"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/confirm_ride_advance_amount"
@@ -265,7 +266,7 @@
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:padding="6dp"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             tools:text="₹500.00" />
 
                     </LinearLayout>
@@ -298,7 +299,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/full_amount"
                             android:textAllCaps="true"
-                            android:textSize="14sp" />
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/confirm_ride_full_amount"
@@ -307,7 +308,7 @@
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:padding="6dp"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             tools:text="₹2000.00" />
 
                     </LinearLayout>
