@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +33,13 @@ public class ConfirmRideFragment extends DialogFragment {
 
     private Activity parentActivity;
     private View rootView;
-    private Cab selectedCabType;
+    private Cab selectedCab;
     private String pickup, drop, startTime;
     private ImageButton backView;
-    private TextView pickupView, dropView, startTimeView, typeView, seatsView, fareView, nameView, contactView;
+    private TextView pickupView, dropView, startTimeView, typeView, seatsView, nameView, contactView,
+            fullAmountView, advanceAmountView;
+    private CardView advancePaymentView, fullPaymentView;
+    private String paymentMode = "Full";
     private Button confirmRideView;
     private DialogInterface.OnDismissListener onDismissListener;
 
@@ -49,7 +54,7 @@ public class ConfirmRideFragment extends DialogFragment {
         parentActivity = getActivity();
 
         if (getArguments() != null) {
-            selectedCabType = (Cab) getArguments().getSerializable("selected_cab_type");
+            selectedCab = (Cab) getArguments().getSerializable("selected_cab_type");
             pickup = getArguments().getString("pickup");
             drop = getArguments().getString("drop");
             startTime = getArguments().getString("startTime");
@@ -88,31 +93,70 @@ public class ConfirmRideFragment extends DialogFragment {
 
         pickupView.setText(pickup);
         dropView.setText(drop);
-        typeView.setText(selectedCabType.getType());
+        typeView.setText(selectedCab.getType());
 
-        if (selectedCabType.getType().equals("Sedan")) {
+        if (selectedCab.getType().equals("Sedan")) {
             seatsView.setText("4");
-        } else if (selectedCabType.getType().equals("SUV")) {
+        } else if (selectedCab.getType().equals("SUV")) {
             seatsView.setText("6");
         }
 
         nameView.setText(user.getName());
         contactView.setText(user.getContact());
 
-        String displayFare = "₹ " + selectedCabType.getCarNumber();
-        fareView.setText(displayFare);
+        float fare = Float.parseFloat(selectedCab.getCarNumber());
+        String displayAdvanceAmt = "₹" + String.format(java.util.Locale.US, "%.2f", (0.2 * fare));
+        advanceAmountView.setText(displayAdvanceAmt);
+        String displayFullAmt = "₹" + String.format(java.util.Locale.US, "%.2f", fare);
+        fullAmountView.setText(displayFullAmt);
 
-        String displayPayment = "PROCEED TO PAY " + "₹" + selectedCabType.getCarNumber();
-        confirmRideView.setText(displayPayment);
+        fullPaymentView.setBackgroundColor(ContextCompat.getColor(parentActivity, R.color.bg_select_cab_pressed));
+        String paymentAmount = "PROCEED TO PAY " + fullAmountView.getText();
+        confirmRideView.setText(paymentAmount);
+
+        /*String sedanDistanceLimit = "", suvDistanceLimit = "";
+
+         *//*for (Cab cab : cabFareList) {
+            if (cab.getType().equals("Sedan"))
+                sedanDistanceLimit = cab.getDriverName();
+            else if (cab.getType().equals("SUV"))
+                suvDistanceLimit = cab.getDriverName();
+        }
+
+        "✪  Distance exceeding " + cabFareList[0].getCarName() + " km is chargeable at ₹" +
+                sedanDistanceLimit + "/km for Sedan and ₹" + suvDistanceLimit + "/km for SUV.\n\n" +*/
+
+        advancePaymentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                advancePaymentView.setBackgroundColor(ContextCompat.getColor(parentActivity, R.color.bg_select_cab_pressed));
+                fullPaymentView.setBackgroundColor(ContextCompat.getColor(parentActivity, R.color.white));
+                String paymentAmount = "PROCEED TO PAY " + advanceAmountView.getText();
+                confirmRideView.setText(paymentAmount);
+                paymentMode = "Advance";
+            }
+        });
+
+        fullPaymentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fullPaymentView.setBackgroundColor(ContextCompat.getColor(parentActivity, R.color.bg_select_cab_pressed));
+                advancePaymentView.setBackgroundColor(ContextCompat.getColor(parentActivity, R.color.white));
+                String paymentAmount = "PROCEED TO PAY " + fullAmountView.getText();
+                confirmRideView.setText(paymentAmount);
+                paymentMode = "Full";
+            }
+        });
 
         confirmRideView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(parentActivity, PaymentActivity.class);
-                intent.putExtra("confirmed_ride_details", selectedCabType);
+                intent.putExtra("confirmed_ride_details", selectedCab);
                 intent.putExtra("pickup", pickup);
                 intent.putExtra("drop", drop);
                 intent.putExtra("startTime", startTime);
+                intent.putExtra("payment_mode", paymentMode);
                 parentActivity.startActivity(intent);
                 dismiss();
             }
@@ -138,9 +182,12 @@ public class ConfirmRideFragment extends DialogFragment {
         startTimeView = rootView.findViewById(R.id.confirm_ride_start_time);
         typeView = rootView.findViewById(R.id.confirm_ride_type);
         seatsView = rootView.findViewById(R.id.confirm_ride_seats);
-        fareView = rootView.findViewById(R.id.confirm_ride_fare);
         nameView = rootView.findViewById(R.id.confirm_ride_name);
         contactView = rootView.findViewById(R.id.confirm_ride_mobile_number);
+        advancePaymentView = rootView.findViewById(R.id.confirm_ride_advance);
+        advanceAmountView = rootView.findViewById(R.id.confirm_ride_advance_amount);
+        fullPaymentView = rootView.findViewById(R.id.confirm_ride_full);
+        fullAmountView = rootView.findViewById(R.id.confirm_ride_full_amount);
         confirmRideView = rootView.findViewById(R.id.confirm_ride_button);
     }
 }
