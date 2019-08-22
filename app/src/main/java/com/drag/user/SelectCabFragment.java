@@ -23,7 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.drag.user.adapter.SelectCabTypeAdapter;
+import com.drag.user.adapter.SelectCabAdapter;
 import com.drag.user.model.Cab;
 import com.drag.user.model.User;
 import com.drag.user.network.APIUtils;
@@ -36,17 +36,17 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class SelectCabTypeFragment extends BottomSheetDialogFragment implements SelectCabTypeAdapter.ListItemClickListener {
+public class SelectCabFragment extends BottomSheetDialogFragment implements SelectCabAdapter.ListItemClickListener {
 
-    private String TAG = SelectCabTypeFragment.class.getSimpleName();
+    private String TAG = SelectCabFragment.class.getSimpleName();
     private Activity parentActivity;
     private View bottomSheetInternal, rootView;
     private String token;
     private User user;
     private Cab travelDetails;
     private ProgressBar progressBar;
-    private TextView rulesView;
-    private SelectCabTypeAdapter selectCabTypeAdapter;
+    private TextView cabRulesView;
+    private SelectCabAdapter selectCabAdapter;
     private RecyclerView recyclerView;
     private RelativeLayout emptyView;
 
@@ -59,7 +59,7 @@ public class SelectCabTypeFragment extends BottomSheetDialogFragment implements 
             travelDetails = (Cab) getArguments().getSerializable("travel_details");
         }
 
-        rootView = inflater.inflate(R.layout.fragment_select_cab_type, container, false);
+        rootView = inflater.inflate(R.layout.fragment_select_cab, container, false);
         return rootView;
     }
 
@@ -105,8 +105,8 @@ public class SelectCabTypeFragment extends BottomSheetDialogFragment implements 
     public void onResume() {
         super.onResume();
         if (isConnectedToInternet()) {
-            getAvailableCabList();
-            if (selectCabTypeAdapter == null)
+            getCabFareList();
+            if (selectCabAdapter == null)
                 progressBar.setVisibility(View.VISIBLE);
         } else
             Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
@@ -117,12 +117,12 @@ public class SelectCabTypeFragment extends BottomSheetDialogFragment implements 
         if (refreshCount != 1)
             refreshLayout.setRefreshing(true);
         if (isConnectedToInternet())
-            getAvailableCabList();
+            getCabFareList();
         else
             Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
     }*/
 
-    private void getAvailableCabList() {
+    private void getCabFareList() {
         EndPointInterface service = APIUtils.getAPIService(parentActivity);
         Call<Cab[]> call = service.cabFareList(
                 user.getEmail(), token, travelDetails.getPickup(), travelDetails.getDrop(), travelDetails.getStartTime());
@@ -140,6 +140,8 @@ public class SelectCabTypeFragment extends BottomSheetDialogFragment implements 
             public void onFailure(@NonNull Call<Cab[]> call, @NonNull Throwable t) {
                 Log.e(TAG + " On Failure", t.getMessage());
                 progressBar.setVisibility(View.GONE);
+                Toast.makeText(parentActivity, "Please check your internet connection or try again later.", Toast.LENGTH_LONG).show();
+                dismiss();
                 /*if (refreshCount == 1) {
                     shimmerView.stopShimmerAnimation();
                     shimmerView.setVisibility(View.GONE);
@@ -153,34 +155,27 @@ public class SelectCabTypeFragment extends BottomSheetDialogFragment implements 
     }
 
     private void generateDataList(Cab[] cabFareList, Cab travelDetails) {
-        selectCabTypeAdapter = new SelectCabTypeAdapter(getContext(), cabFareList, travelDetails, this);
-        recyclerView.setAdapter(selectCabTypeAdapter);
+        selectCabAdapter = new SelectCabAdapter(getContext(), cabFareList, travelDetails, this);
+        recyclerView.setAdapter(selectCabAdapter);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
         if (layoutManager.getItemCount() == 0) {
             emptyView.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.GONE);
         } else {
-            emptyView.setVisibility(View.INVISIBLE);
+            emptyView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
 
-            String sedanDistanceLimit = "", suvDistanceLimit = "";
+            String selectCabRules =
+                    "✪  One way trip of about " + cabFareList[0].getCarName() + " km\n" +
+                            "✪  Includes toll charges, permits and state taxes if any\n" +
+                            "✪  24x7 Customer Support\n" +
+                            "✪  Professional Quality Drivers \n" +
+                            "✪  Zero cancellation fee up to 6 hours before the trip";
 
-            for (Cab cab : cabFareList) {
-                if (cab.getType().equals("Sedan"))
-                    sedanDistanceLimit = cab.getDriverName();
-                else if (cab.getType().equals("SUV"))
-                    suvDistanceLimit = cab.getDriverName();
-            }
-
-            String selectCabTypeRules = "✪  One way trip of about " + cabFareList[0].getCarName() + " km includes toll charges if any.\n\n" +
-                    "✪  Distance exceeding " + cabFareList[0].getCarName() + " km is chargeable at ₹" +
-                    sedanDistanceLimit + "/km for Sedan and ₹" + suvDistanceLimit + "/km for SUV.\n\n" +
-                    "✪  Fare for extra distance to be paid to the driver in cash.\n";
-
-            rulesView.setText(selectCabTypeRules);
-            rulesView.setBackgroundColor(getResources().getColor(R.color.bg_select_cab_pressed));
+            cabRulesView.setText(selectCabRules);
+            cabRulesView.setBackgroundColor(getResources().getColor(R.color.bg_select_cab_pressed));
         }
     }
 
@@ -222,8 +217,8 @@ public class SelectCabTypeFragment extends BottomSheetDialogFragment implements 
         dropView = rootView.findViewById(R.id.select_cab_drop);
         shimmerView = rootView.findViewById(R.id.select_cab_shimmer_layout);
         refreshLayout = rootView.findViewById(R.id.select_cab_refresh_layout);*/
-        progressBar = rootView.findViewById(R.id.select_cab_type_progress_bar);
-        rulesView = rootView.findViewById(R.id.select_cab_type_rules);
+        progressBar = rootView.findViewById(R.id.select_cab_progress_bar);
+        cabRulesView = rootView.findViewById(R.id.select_cab_rules);
         recyclerView = rootView.findViewById(R.id.select_cab_recycler_view);
         emptyView = rootView.findViewById(R.id.select_cab_empty_layout);
     }

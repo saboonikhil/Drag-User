@@ -4,12 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    app:behavior_hideable="true"
-    app:layout_behavior="@string/bottom_sheet_behavior">
+    android:background="@color/white">
 
     <ProgressBar
-        android:id="@+id/select_cab_type_progress_bar"
+        android:id="@+id/select_cab_progress_bar"
         style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,13 +15,11 @@
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/select_cab_type_rules"
+        android:id="@+id/select_cab_rules"
         style="@style/TextStyle15"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
+        android:padding="16dp"
         android:textSize="12sp"
         tools:background="@color/bg_select_cab_pressed"
         tools:text="@string/select_cab_type_rules" />
@@ -166,8 +162,7 @@
         android:id="@+id/select_cab_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/select_cab_type_rules"
-        android:orientation="horizontal" />
+        android:layout_below="@id/select_cab_rules" />
 
     <!--<android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/select_cab_refresh_layout"

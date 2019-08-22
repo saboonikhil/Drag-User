@@ -3,7 +3,6 @@ package com.drag.user.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 import com.drag.user.R;
 import com.drag.user.model.Cab;
 
-public class SelectCabTypeAdapter extends RecyclerView.Adapter<SelectCabTypeAdapter.SelectCabHolder> {
+public class SelectCabAdapter extends RecyclerView.Adapter<SelectCabAdapter.SelectCabHolder> {
 
     private Context context;
     private Cab[] cabFareList;
@@ -24,7 +23,7 @@ public class SelectCabTypeAdapter extends RecyclerView.Adapter<SelectCabTypeAdap
     private int itemCount = 0;
     private View clickedItem;
 
-    public SelectCabTypeAdapter(Context context, Cab[] cabFareList, Cab travelDetails, ListItemClickListener listener) {
+    public SelectCabAdapter(Context context, Cab[] cabFareList, Cab travelDetails, ListItemClickListener listener) {
         this.context = context;
         this.cabFareList = cabFareList;
         this.travelDetails = travelDetails;
@@ -40,14 +39,12 @@ public class SelectCabTypeAdapter extends RecyclerView.Adapter<SelectCabTypeAdap
     @Override
     public SelectCabHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.layout_select_cab_type, parent, false);
+        View view = layoutInflater.inflate(R.layout.layout_select_cab, parent, false);
         return new SelectCabHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SelectCabHolder holder, int position) {
-        holder.rootView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
-
         if (cabFareList[position].getType().equals("Sedan")) {
             holder.typeView.setText(R.string.sedan);
             holder.seatsView.setText("4");
@@ -60,7 +57,7 @@ public class SelectCabTypeAdapter extends RecyclerView.Adapter<SelectCabTypeAdap
             holder.carNameView.setText(R.string.suv_cars);
         }
 
-        String displayFare = "₹ " + cabFareList[position].getCarNumber();
+        String displayFare = "₹" + cabFareList[position].getCarNumber();
         holder.fareView.setText(displayFare);
     }
 
@@ -78,18 +75,16 @@ public class SelectCabTypeAdapter extends RecyclerView.Adapter<SelectCabTypeAdap
     }
 
     class SelectCabHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private CardView rootView;
         private ImageView iconView;
         private TextView typeView, seatsView, fareView, carNameView;
 
         SelectCabHolder(View itemView) {
             super(itemView);
-            rootView = itemView.findViewById(R.id.select_cab_layout);
-            iconView = itemView.findViewById(R.id.select_cab_type_icon);
-            typeView = itemView.findViewById(R.id.select_cab_type_name);
-            seatsView = itemView.findViewById(R.id.select_cab_type_seats);
-            carNameView = itemView.findViewById(R.id.select_cab_type_car_name);
-            fareView = itemView.findViewById(R.id.select_cab_type_fare);
+            iconView = itemView.findViewById(R.id.select_cab_icon);
+            typeView = itemView.findViewById(R.id.select_cab_name);
+            seatsView = itemView.findViewById(R.id.select_cab_seats);
+            carNameView = itemView.findViewById(R.id.select_cab_car_name);
+            fareView = itemView.findViewById(R.id.select_cab_fare);
             itemView.setOnClickListener(this);
         }
 
