@@ -320,7 +320,7 @@
     </android.support.v7.widget.CardView>-->
 
     <Button
-        android:id="@+id/book_ride_select"
+        android:id="@+id/book_ride_select_cab"
         style="@style/TextStyle7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

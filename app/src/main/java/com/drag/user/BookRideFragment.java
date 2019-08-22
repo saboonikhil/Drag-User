@@ -54,8 +54,7 @@ public class BookRideFragment extends Fragment {
     private ImageButton swapLocationView;
     private AutoCompleteTextView pickupView, dropView;
     private EditText dateView, timeView;
-    private Button selectView;
-    private boolean route = true;
+    private Button selectCabView;
     private long thirtyDays = 2592000000L;
 
     @Nullable
@@ -101,6 +100,10 @@ public class BookRideFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 GradientDrawable pickupGrad = (GradientDrawable) pickupView.getBackground();
                 pickupGrad.setStroke(1, getResources().getColor(R.color.white_two));
+                pickupView.dismissDropDown();
+                if (pickupView.getText().toString().equals(dropView.getText().toString())) {
+                    dropView.getText().clear();
+                }
             }
         });
 
@@ -117,6 +120,10 @@ public class BookRideFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 GradientDrawable dropGrad = (GradientDrawable) dropView.getBackground();
                 dropGrad.setStroke(1, getResources().getColor(R.color.white_two));
+                dropView.dismissDropDown();
+                if (dropView.getText().toString().equals(pickupView.getText().toString())) {
+                    pickupView.getText().clear();
+                }
             }
         });
 
@@ -127,10 +134,10 @@ public class BookRideFragment extends Fragment {
                     GradientDrawable myGrad = (GradientDrawable) pickupView.getBackground();
                     myGrad.setStroke(2, Color.RED);
                 } else {
-                    route = !route;
                     Editable location = pickupView.getText();
                     pickupView.setText(dropView.getText());
                     dropView.setText(location);
+                    setupCitySpinner();
                 }
             }
         });
@@ -141,7 +148,7 @@ public class BookRideFragment extends Fragment {
         TimeCalendar.setTimeInMillis(System.currentTimeMillis() + 86400000);
         timeView.setText(new SimpleDateFormat("hh:mm a", Locale.US).format(TimeCalendar.getTime()));
 
-        selectView.setOnClickListener(new View.OnClickListener() {
+        selectCabView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectCab();
@@ -244,11 +251,11 @@ public class BookRideFragment extends Fragment {
         } else {
             if (isConnectedToInternet()) {
                 Cab travelDetails = new Cab(pickup, drop, startTime);
-                SelectCabTypeFragment selectCab = new SelectCabTypeFragment();
+                SelectCabFragment selectCab = new SelectCabFragment();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("travel_details", travelDetails);
                 selectCab.setArguments(bundle);
-                selectCab.show(getChildFragmentManager(), "Select Cab Type");
+                selectCab.show(getChildFragmentManager(), "Select Cab");
             } else {
                 Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
             }
@@ -291,6 +298,6 @@ public class BookRideFragment extends Fragment {
         swapLocationView = rootView.findViewById(R.id.book_ride_swap_location);
         dateView = rootView.findViewById(R.id.book_ride_date);
         timeView = rootView.findViewById(R.id.book_ride_time);
-        selectView = rootView.findViewById(R.id.book_ride_select);
+        selectCabView = rootView.findViewById(R.id.book_ride_select_cab);
     }
 }
