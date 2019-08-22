@@ -85,6 +85,9 @@
     <string name="pickup">Pickup</string>
     <string name="drop">Drop</string>
     <string name="make_payment">Make Payment</string>
+    <string name="select_payment_mode">• Select Payment Mode •</string>
+    <string name="advance_amount">Advance Amount</string>
+    <string name="full_amount">Full Amount</string>
 
     <!-- Strings related to Payment -->
     <string name="taking_you_to_payment_gateway">Taking You To Payment Gateway &#8230;</string>

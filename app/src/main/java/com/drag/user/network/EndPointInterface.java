@@ -122,7 +122,8 @@ public interface EndPointInterface {
             @Path("uID") String uID,
             @Query("x_key") String key,
             @Query("token") String token,
-            @Field("cabTypeSelected") String cID
+            @Field("cabTypeSelected") String cID,
+            @Field("paymentMode") String paymentMode
     );
 
     @POST("/api/users/{uID}/createTrip")

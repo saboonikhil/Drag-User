@@ -30,7 +30,7 @@ import retrofit2.Response;
 public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTransactionCallback {
 
     private String TAG = PaymentActivity.class.getSimpleName();
-    private String token, pickup, drop, startTime, orderId;
+    private String token, pickup, drop, startTime, orderId, paymentMode;
     private User user;
     private Cab cabTypeSelected;
     private TextView messageView;
@@ -51,13 +51,14 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
         pickup = intent.getStringExtra("pickup");
         drop = intent.getStringExtra("drop");
         startTime = intent.getStringExtra("startTime");
+        paymentMode = intent.getStringExtra("payment_mode");
 
         generateCheckSum();
     }
 
     private void generateCheckSum() {
         EndPointInterface service = APIUtils.getAPIService(PaymentActivity.this);
-        service.generateChecksum(user.get_id(), user.getEmail(), token, cabTypeSelected.get_id()).enqueue(new Callback<Paytm>() {
+        service.generateChecksum(user.get_id(), user.getEmail(), token, cabTypeSelected.get_id(), paymentMode).enqueue(new Callback<Paytm>() {
             @Override
             public void onResponse(@NonNull Call<Paytm> call, @NonNull Response<Paytm> response) {
                 if (response.body() != null) {
@@ -172,6 +173,16 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
                     }
                 });
                 break;
+            case "Trip Confirmed":
+                setContentView(R.layout.layout_payment_success);
+                ImageButton confirmBackView = findViewById(R.id.payment_success_back);
+                confirmBackView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+                break;
             case "Payment Failed":
                 setContentView(R.layout.layout_payment_failed);
                 ImageButton failedBackView = findViewById(R.id.payment_failed_back);
@@ -192,7 +203,6 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
                     }
                 });
                 break;
-
             default:
                 setContentView(R.layout.layout_payment_pending);
                 ImageButton pendingBack1View = findViewById(R.id.payment_pending_back);
