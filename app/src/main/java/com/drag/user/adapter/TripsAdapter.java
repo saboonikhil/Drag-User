@@ -67,10 +67,6 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.TripsCardVie
                     holder.statusView.setBackgroundColor(Color.parseColor("#edaf02"));
                     holder.statusView.setText(R.string.trip_confirmed);
                     break;
-                case "Payment In Process":
-                    holder.statusView.setBackgroundColor(Color.parseColor("#edaf02"));
-                    holder.statusView.setText(R.string.payment_in_process);
-                    break;
                 case "Payment Failed":
                     holder.statusView.setBackgroundColor(Color.parseColor("#ff4c4c"));
                     holder.statusView.setText(R.string.payment_failed);

@@ -35,6 +35,7 @@ public class TripDetailsFragment extends DialogFragment {
     private int position;
     private View rootView;
     private ImageButton backView;
+    private Calendar startTime;
     private LinearLayout cabInfoView, driverInfoView;
     private Button callView;
     private TextView startTimeView, driverNameView, driverContactView, carNameView, pickupView, dropView,
@@ -74,39 +75,45 @@ public class TripDetailsFragment extends DialogFragment {
         });
 
         try {
-            Calendar calendar = Calendar.getInstance();
+            startTime = Calendar.getInstance();
             Date displayTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(trips[position].getStartTime());
-            calendar.setTime(displayTime);
-            calendar.add(Calendar.HOUR, 5);
-            calendar.add(Calendar.MINUTE, 30);
-            startTimeView.setText(new SimpleDateFormat("EEE, MMM d, hh:mm a").format(calendar.getTime()));
+            startTime.setTime(displayTime);
+            startTime.add(Calendar.HOUR, 5);
+            startTime.add(Calendar.MINUTE, 30);
+            startTimeView.setText(new SimpleDateFormat("EEE, MMM d, hh:mm a").format(startTime.getTime()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        String driverName = trips[position].getDriverName();
-        driverContact = trips[position].getDriverContact();
-        if (driverName != null && driverContact != null && driverName.length() >= 1 && driverContact.length() >= 1) {
-            driverNameView.setText(driverName);
-            driverContactView.setText(driverContact);
+        if ((Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis()) > -18000000 &&
+                (Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis()) < 86400000) {
+
+            String driverName = trips[position].getDriverName();
+            driverContact = trips[position].getDriverContact();
+            if (driverName != null && driverContact != null && driverName.length() >= 1 && driverContact.length() >= 1) {
+                driverInfoView.setVisibility(View.VISIBLE);
+                driverNameView.setText(driverName);
+                driverContactView.setText(driverContact);
+            }
+
+            callView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    callAction();
+                }
+            });
+
+            String carName = trips[position].getCarName();
+            String carNumber = trips[position].getCarNumber();
+            if (carName != null && carNumber != null && carName.length() >= 1 && carNumber.length() >= 1) {
+                cabInfoView.setVisibility(View.VISIBLE);
+                carNameView.setText(carName);
+                carNumberView.setText(carNumber);
+            }
         } else {
             driverInfoView.setVisibility(View.GONE);
-        }
-
-        callView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callAction();
-            }
-        });
-
-        String carName = trips[position].getCarName();
-        String carNumber = trips[position].getCarNumber();
-        if (carName != null && carNumber != null && carName.length() >= 1 && carNumber.length() >= 1) {
-            carNameView.setText(carName);
-            carNumberView.setText(carNumber);
-        } else
             cabInfoView.setVisibility(View.GONE);
+        }
 
         String displayFare = "₹" + trips[position].getFare();
         fareView.setText(displayFare);

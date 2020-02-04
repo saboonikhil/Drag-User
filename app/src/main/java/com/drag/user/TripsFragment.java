@@ -101,12 +101,15 @@ public class TripsFragment extends Fragment implements TripsAdapter.ListItemClic
 
     @Override
     public void onListItemClick(Cab[] trips, int itemPosition) {
-        TripDetailsFragment tripDetails = new TripDetailsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("trip_details", trips);
-        bundle.putInt("position", itemPosition);
-        tripDetails.setArguments(bundle);
-        tripDetails.show(getChildFragmentManager(), "Trip Details");
+        String tripStatus = trips[itemPosition].getRiders()[0].getTripStatus();
+        if (!tripStatus.equals("Payment Failed") && !tripStatus.equals("Cancelled")) {
+            TripDetailsFragment tripDetails = new TripDetailsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("trip_details", trips);
+            bundle.putInt("position", itemPosition);
+            tripDetails.setArguments(bundle);
+            tripDetails.show(getChildFragmentManager(), "Trip Details");
+        }
     }
 
     private void initViews() {
