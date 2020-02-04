@@ -164,15 +164,6 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
     private void displayTransactionStatus(String status) {
         switch (status) {
             case "Payment Successful":
-                setContentView(R.layout.layout_payment_success);
-                ImageButton successBackView = findViewById(R.id.payment_success_back);
-                successBackView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                });
-                break;
             case "Trip Confirmed":
                 setContentView(R.layout.layout_payment_success);
                 ImageButton confirmBackView = findViewById(R.id.payment_success_back);
@@ -193,20 +184,10 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
                     }
                 });
                 break;
-            case "Payment In Process":
+            default:
                 setContentView(R.layout.layout_payment_pending);
                 ImageButton pendingBackView = findViewById(R.id.payment_pending_back);
                 pendingBackView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        finish();
-                    }
-                });
-                break;
-            default:
-                setContentView(R.layout.layout_payment_pending);
-                ImageButton pendingBack1View = findViewById(R.id.payment_pending_back);
-                pendingBack1View.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         finish();

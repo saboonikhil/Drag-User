@@ -1,18 +1,13 @@
 package com.drag.user;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +39,7 @@ public class HelpFragment extends DialogFragment {
     private String token;
     private User user;
     private ImageButton backView;
-    private Button callView, sendView;
+    private Button sendView;
     private EditText feedbackView;
     private ProgressDialog progressDialog;
 
@@ -76,13 +71,6 @@ public class HelpFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 dismiss();
-            }
-        });
-
-        callView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callAction();
             }
         });
 
@@ -129,35 +117,8 @@ public class HelpFragment extends DialogFragment {
         });
     }
 
-    private void callAction() {
-        String helpDesk = "+91 7010823612";
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:" + helpDesk));
-
-        if (ActivityCompat.checkSelfPermission(parentActivity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            Log.v("TAG", "Calling permission is revoked");
-            ActivityCompat.requestPermissions(parentActivity, new String[]{Manifest.permission.CALL_PHONE}, 1);
-        } else {
-            Log.v("TAG", "Calling permission is granted");
-            startActivity(callIntent);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 1) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getContext(), "Permission granted", Toast.LENGTH_SHORT).show();
-                callAction();
-            } else {
-                Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
     private void initViews() {
         backView = rootView.findViewById(R.id.help_back);
-        callView = rootView.findViewById(R.id.help_call);
         feedbackView = rootView.findViewById(R.id.help_feedback);
         sendView = rootView.findViewById(R.id.help_send);
     }
