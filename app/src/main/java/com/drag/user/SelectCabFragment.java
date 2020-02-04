@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,9 +47,9 @@ public class SelectCabFragment extends BottomSheetDialogFragment implements Sele
     private Cab travelDetails;
     private ProgressBar progressBar;
     private TextView cabRulesView;
-    private SelectCabAdapter selectCabAdapter;
     private RecyclerView recyclerView;
     private RelativeLayout emptyView;
+    private Button selectCabView;
 
     @Nullable
     @Override
@@ -93,21 +94,9 @@ public class SelectCabFragment extends BottomSheetDialogFragment implements Sele
         String json = pref.getString("dbObj", "");
         user = new Gson().fromJson(json, User.class);
 
-        /*refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                pullAndRefresh();
-            }
-        });*/
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         if (isConnectedToInternet()) {
             getCabFareList();
-            if (selectCabAdapter == null)
-                progressBar.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
         } else
             Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
     }
@@ -131,8 +120,10 @@ public class SelectCabFragment extends BottomSheetDialogFragment implements Sele
             @Override
             public void onResponse(@NonNull Call<Cab[]> call, @NonNull Response<Cab[]> response) {
                 if (response.body() != null) {
-                    progressBar.setVisibility(View.GONE);
-                    generateDataList(response.body(), travelDetails);
+                    if (parentActivity != null && isAdded()) {
+                        progressBar.setVisibility(View.GONE);
+                        generateDataList(response.body(), travelDetails);
+                    }
                 }
             }
 
@@ -155,9 +146,10 @@ public class SelectCabFragment extends BottomSheetDialogFragment implements Sele
     }
 
     private void generateDataList(Cab[] cabFareList, Cab travelDetails) {
-        selectCabAdapter = new SelectCabAdapter(getContext(), cabFareList, travelDetails, this);
+        SelectCabAdapter selectCabAdapter = new SelectCabAdapter(getContext(), cabFareList, travelDetails, this);
         recyclerView.setAdapter(selectCabAdapter);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        int count = cabFareList.length != 0 ? cabFareList.length : 1;
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), count);
         recyclerView.setLayoutManager(layoutManager);
 
         if (layoutManager.getItemCount() == 0) {
@@ -166,37 +158,73 @@ public class SelectCabFragment extends BottomSheetDialogFragment implements Sele
         } else {
             emptyView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-
-            String selectCabRules =
-                    "✪  One way trip of about " + cabFareList[0].getCarName() + " km\n" +
-                            "✪  Includes toll charges, permits and state taxes if any\n" +
-                            "✪  24x7 Customer Support\n" +
-                            "✪  Professional Quality Drivers \n" +
-                            "✪  Zero cancellation fee up to 6 hours before the trip";
-
-            cabRulesView.setText(selectCabRules);
-            cabRulesView.setBackgroundColor(getResources().getColor(R.color.bg_select_cab_pressed));
         }
     }
 
     @Override
-    public void onListItemClick(Cab selectedCabType, String pickup, String drop, String startTime) {
-        BottomSheetBehavior.from(bottomSheetInternal).setState(BottomSheetBehavior.STATE_EXPANDED);
-        ConfirmRideFragment confirmRide = new ConfirmRideFragment();
-        confirmRide.setOnDismissListener(new DialogInterface.OnDismissListener() {
+    public void onListItemClick(final Cab selectedCabType, final String pickup, final String drop, final String startTime) {
+        cabRulesView.setVisibility(View.VISIBLE);
+        selectCabView.setVisibility(View.VISIBLE);
+        switch (selectedCabType.getType()) {
+            case "Compact":
+                String compactRules =
+                        "✪  One way trip of about " + selectedCabType.getCarName() + " km\n" +
+                                "✪  Model Type: Indica, Swift, Alto, Ford Figo\n" +
+                                "✪  Luggage Capacity: 0 big bags + 2 small bag\n" +
+                                "✪  ₹100/hr will be charged for additional hours\n" +
+                                "✪  Extra km is chargeable at ₹" + selectedCabType.getDriverName() + "/km";
+                cabRulesView.setText(compactRules);
+                break;
+            case "Sedan":
+                String sedanRules =
+                        "✪  One way trip of about " + selectedCabType.getCarName() + " km\n" +
+                                "✪  Model Type: Dzire, Etios, Indigo, Xcent\n" +
+                                "✪  Luggage Capacity: 2 big bags + 1 small bag\n" +
+                                "✪  ₹100/hr will be charged for additional hours\n" +
+                                "✪  Extra km is chargeable at ₹" + selectedCabType.getDriverName() + "/km";
+                cabRulesView.setText(sedanRules);
+                break;
+            case "SUV":
+                String suvRules =
+                        "✪  One way trip of about " + selectedCabType.getCarName() + " km\n" +
+                                "✪  Model Type: Ertiga, Xylo, Innova\n" +
+                                "✪  Luggage Capacity: 3 big bags + 2 small bags\n" +
+                                "✪  ₹100/hr will be charged for additional hours\n" +
+                                "✪  Extra km is chargeable at ₹" + selectedCabType.getDriverName() + "/km";
+                cabRulesView.setText(suvRules);
+                break;
+            case "SUV+":
+                String suvPlusRules =
+                        "✪  One way trip of about " + selectedCabType.getCarName() + " km\n" +
+                                "✪  Model Type: Ertiga, Xylo, Innova\n" +
+                                "✪  Luggage Capacity: Equipped with carrier\n" +
+                                "✪  ₹100/hr will be charged for additional hours\n" +
+                                "✪  Extra km is chargeable at ₹" + selectedCabType.getDriverName() + "/km";
+                cabRulesView.setText(suvPlusRules);
+                break;
+        }
+
+        selectCabView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDismiss(DialogInterface dialog) {
-                dismiss();
+            public void onClick(View v) {
+                BottomSheetBehavior.from(bottomSheetInternal).setState(BottomSheetBehavior.STATE_EXPANDED);
+                ConfirmRideFragment confirmRide = new ConfirmRideFragment();
+                confirmRide.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        dismiss();
+                    }
+                });
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("selected_cab_type", selectedCabType);
+                bundle.putString("pickup", pickup);
+                bundle.putString("drop", drop);
+                bundle.putString("startTime", startTime);
+                confirmRide.setArguments(bundle);
+                confirmRide.show(getChildFragmentManager(), "Confirm Ride");
             }
         });
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("selected_cab_type", selectedCabType);
-        bundle.putString("pickup", pickup);
-        bundle.putString("drop", drop);
-        bundle.putString("startTime", startTime);
-        confirmRide.setArguments(bundle);
-        confirmRide.show(getChildFragmentManager(), "Confirm Ride");
     }
 
     private boolean isConnectedToInternet() {
@@ -209,17 +237,10 @@ public class SelectCabFragment extends BottomSheetDialogFragment implements Sele
     }
 
     private void initViews() {
-        /*collapsedBarView = rootView.findViewById(R.id.select_cab_collapsed_action_bar);
-        expandedBarView = rootView.findViewById(R.id.select_cab_expanded_action_bar);
-        collapsedCloseView = rootView.findViewById(R.id.select_cab_collapsed_close);
-        expandedCloseView = rootView.findViewById(R.id.select_cab_expanded_close);
-        pickupView = rootView.findViewById(R.id.select_cab_pickup);
-        dropView = rootView.findViewById(R.id.select_cab_drop);
-        shimmerView = rootView.findViewById(R.id.select_cab_shimmer_layout);
-        refreshLayout = rootView.findViewById(R.id.select_cab_refresh_layout);*/
         progressBar = rootView.findViewById(R.id.select_cab_progress_bar);
         cabRulesView = rootView.findViewById(R.id.select_cab_rules);
         recyclerView = rootView.findViewById(R.id.select_cab_recycler_view);
         emptyView = rootView.findViewById(R.id.select_cab_empty_layout);
+        selectCabView = rootView.findViewById(R.id.select_cab_button);
     }
 }

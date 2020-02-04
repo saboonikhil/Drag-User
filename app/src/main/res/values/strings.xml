@@ -67,13 +67,16 @@
     <string name="no_cabs_available_now">No Cabs Available Now !</string>
     <string name="please_check_after_sometime">Please check after some time.</string>
     <string name="cab_type">Cab Type</string>
+    <string name="compact">Compact</string>
     <string name="sedan">Sedan</string>
     <string name="suv">SUV</string>
-    <string name="sedan_cars">Dzire, Etios, Xcent</string>
-    <string name="suv_cars">Innova, Xylo, Lodgy</string>
-    <string name="select_cab_type_rules">\u00201. One way trip of about 135 km includes toll charges if any.\n\n
-        2. Distance exceeding 135 km is chargeable at ₹12/km for Sedan and ₹15/km for SUV.\n\n
-        3. Fare for extra distance to be paid to the driver in cash.</string>
+    <string name="suv_plus">SUV+</string>
+    <string name="hatchback_cars">Indica, Swift, Alto, Ford Figo</string>
+    <string name="sedan_cars">Dzire, Etios, Indigo, Xcent</string>
+    <string name="suv_cars">Ertiga, Xylo, Innova</string>
+    <string name="select_cab_type_rules">✪ One way trip of about 135 km includes toll charges if any.\n
+        ✪ Distance exceeding 135 km is chargeable at ₹12/km for Sedan and ₹15/km for SUV.\n
+        ✪ Fare for extra distance to be paid to the driver in cash.</string>
 
     <!-- Strings related to Confirm Ride -->
     <string name="confirm_ride">Confirm Ride</string>

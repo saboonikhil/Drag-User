@@ -45,16 +45,29 @@ public class SelectCabAdapter extends RecyclerView.Adapter<SelectCabAdapter.Sele
 
     @Override
     public void onBindViewHolder(@NonNull SelectCabHolder holder, int position) {
-        if (cabFareList[position].getType().equals("Sedan")) {
-            holder.typeView.setText(R.string.sedan);
-            holder.seatsView.setText("4");
-            holder.iconView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_sedan));
-            holder.carNameView.setText(R.string.sedan_cars);
-        } else if (cabFareList[position].getType().equals("SUV")) {
-            holder.typeView.setText(R.string.suv);
-            holder.seatsView.setText("6");
-            holder.iconView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_suv));
-            holder.carNameView.setText(R.string.suv_cars);
+
+        switch (cabFareList[position].getType()) {
+            case "Compact":
+                holder.typeView.setText(R.string.compact);
+                holder.seatsView.setText("4");
+                holder.iconView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_sedan));
+                break;
+            case "Sedan":
+                holder.typeView.setText(R.string.sedan);
+                holder.seatsView.setText("4");
+                holder.iconView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_sedan));
+                holder.item.callOnClick();
+                break;
+            case "SUV":
+                holder.typeView.setText(R.string.suv);
+                holder.seatsView.setText("6");
+                holder.iconView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_suv));
+                break;
+            case "SUV+":
+                holder.typeView.setText(R.string.suv_plus);
+                holder.seatsView.setText("6");
+                holder.iconView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_suv));
+                break;
         }
 
         String displayFare = "₹" + cabFareList[position].getCarNumber();
@@ -76,14 +89,15 @@ public class SelectCabAdapter extends RecyclerView.Adapter<SelectCabAdapter.Sele
 
     class SelectCabHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView iconView;
-        private TextView typeView, seatsView, fareView, carNameView;
+        private TextView typeView, seatsView, fareView;
+        private View item;
 
         SelectCabHolder(View itemView) {
             super(itemView);
+            item = itemView;
             iconView = itemView.findViewById(R.id.select_cab_icon);
-            typeView = itemView.findViewById(R.id.select_cab_name);
+            typeView = itemView.findViewById(R.id.select_cab_type);
             seatsView = itemView.findViewById(R.id.select_cab_seats);
-            carNameView = itemView.findViewById(R.id.select_cab_car_name);
             fareView = itemView.findViewById(R.id.select_cab_fare);
             itemView.setOnClickListener(this);
         }

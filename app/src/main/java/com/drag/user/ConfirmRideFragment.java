@@ -114,18 +114,6 @@ public class ConfirmRideFragment extends DialogFragment {
         String paymentAmount = "PROCEED TO PAY " + fullAmountView.getText();
         confirmRideView.setText(paymentAmount);
 
-        /*String sedanDistanceLimit = "", suvDistanceLimit = "";
-
-         *//*for (Cab cab : cabFareList) {
-            if (cab.getType().equals("Sedan"))
-                sedanDistanceLimit = cab.getDriverName();
-            else if (cab.getType().equals("SUV"))
-                suvDistanceLimit = cab.getDriverName();
-        }
-
-        "✪  Distance exceeding " + cabFareList[0].getCarName() + " km is chargeable at ₹" +
-                sedanDistanceLimit + "/km for Sedan and ₹" + suvDistanceLimit + "/km for SUV.\n\n" +*/
-
         advancePaymentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -6,6 +6,18 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
+    <Button
+        android:id="@+id/select_cab_button"
+        style="@style/TextStyle7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/select_cab_rules"
+        android:background="@color/colorPrimary"
+        android:text="@string/confirm_ride"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <ProgressBar
         android:id="@+id/select_cab_progress_bar"
         style="@style/Widget.AppCompat.ProgressBar"
@@ -13,164 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/select_cab_rules"
-        style="@style/TextStyle15"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textSize="12sp"
-        tools:background="@color/bg_select_cab_pressed"
-        tools:text="@string/select_cab_type_rules" />
-
-    <!--<LinearLayout
-        android:id="@+id/select_cab_collapsed_action_bar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_marginStart="24dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/TextStyle21"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/select_cab"
-                android:textSize="18sp" />
-
-            <TextView
-                style="@style/TextStyle11"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/swipe_up_to_see_more" />
-
-        </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/select_cab_collapsed_close"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_close"
-            tools:ignore="ContentDescription" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/select_cab_expanded_action_bar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_below="@+id/select_cab_collapsed_action_bar"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:visibility="gone">
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/select_cab_pickup"
-                style="@style/TextStyle21"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toStartOf="@+id/select_cab_path"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                tools:ignore="RelativeOverlap"
-                tools:text="IIT Kharagpur" />
-
-            <ImageView
-                android:id="@+id/select_cab_path"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                app:srcCompat="@drawable/ic_path"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/select_cab_drop"
-                style="@style/TextStyle21"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toEndOf="@+id/select_cab_path"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                tools:text="Kolkata Airport" />
-
-        </RelativeLayout>
-
-        <ImageButton
-            android:id="@+id/select_cab_expanded_close"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/close"
-            app:srcCompat="@drawable/ic_close" />
-
-    </LinearLayout>-->
-
-    <!--<com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/select_cab_shimmer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/select_cab_expanded_action_bar"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        shimmer:duration="800">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include layout="@layout/layout_select_shimmer" />
-
-            <include layout="@layout/layout_select_shimmer" />
-
-            <include layout="@layout/layout_select_shimmer" />
-
-            <include layout="@layout/layout_select_shimmer" />
-
-            <include layout="@layout/layout_select_shimmer" />
-
-            <include layout="@layout/layout_select_shimmer" />
-
-            <include layout="@layout/layout_select_shimmer" />
-
-        </LinearLayout>
-
-    </com.facebook.shimmer.ShimmerFrameLayout>-->
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/select_cab_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/select_cab_rules" />
-
-    <!--<android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/select_cab_refresh_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/select_cab_expanded_action_bar"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    </android.support.v4.widget.SwipeRefreshLayout>-->
 
     <RelativeLayout
         android:id="@+id/select_cab_empty_layout"
@@ -209,5 +63,27 @@
             android:text="@string/please_check_after_sometime" />
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/select_cab_rules"
+        style="@style/TextStyle15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/select_cab_recycler_view"
+        android:background="@color/bg_select_cab_pressed"
+        android:lineSpacingExtra="4sp"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="20dp"
+        android:textSize="12sp"
+        android:visibility="gone"
+        tools:text="@string/select_cab_type_rules"
+        tools:visibility="visible" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/select_cab_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
