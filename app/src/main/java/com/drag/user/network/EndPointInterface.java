@@ -26,7 +26,7 @@ public interface EndPointInterface {
     Call<Location[]> authLocation(
             @Query("x_key") String key,
             @Query("token") String token,
-            @Query("versionCode") int versionCode
+            @Query("userVC") int versionCode
     );
 
     @POST("/signIn")

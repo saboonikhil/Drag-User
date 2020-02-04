@@ -74,12 +74,13 @@ public class BookRideFragment extends Fragment {
         SharedPreferences pref = parentActivity.getSharedPreferences("AppPref", MODE_PRIVATE);
         Location[] locations = (Location[]) ObjectSerializer.deserialize(pref.getString("locations",
                 ObjectSerializer.serialize(new Location[10])));
-        cities = new String[locations.length];
-        for (int i = 0; i < locations.length; i++)
-            cities[i] = locations[i].getCity();
+        if (locations != null) {
+            cities = new String[locations.length];
+            for (int i = 0; i < locations.length; i++)
+                cities[i] = locations[i].getCity();
+        }
 
         imm = (InputMethodManager) parentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
-
         GradientDrawable pickupGrad = (GradientDrawable) pickupView.getBackground();
         pickupGrad.setStroke(2, getResources().getColor(R.color.white_two));
         GradientDrawable dropGrad = (GradientDrawable) dropView.getBackground();
