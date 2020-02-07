@@ -119,17 +119,17 @@
             android:background="@color/divider" />
 
         <TextView
-            android:id="@+id/account_help"
+            android:id="@+id/account_help_faq"
             style="@style/TextStyle19"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
-            android:drawableStart="@drawable/ic_help"
+            android:drawableStart="@drawable/ic_help_faq"
             android:drawableEnd="@drawable/ic_go"
             android:drawablePadding="16dp"
             android:paddingTop="24dp"
             android:paddingBottom="24dp"
-            android:text="@string/help" />
+            android:text="@string/help_and_faq" />
 
         <View
             android:layout_width="match_parent"

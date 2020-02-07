@@ -39,6 +39,18 @@
         <item name="android:background">@color/white</item>
     </style>
 
+    <style name="DialogNegativeButton">
+        <item name="android:background">@drawable/background_button</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+        <item name="android:textColor">@color/warm_grey</item>
+    </style>
+
+    <style name="DialogPositiveButton">
+        <item name="android:background">@drawable/background_button</item>
+        <item name="android:textColor">@color/greyish_brown</item>
+        <item name="android:fontFamily">@font/montserrat_semi_bold</item>
+    </style>
+
     <style name="EditTextTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlNormal">@color/colorAccent2</item>
         <item name="colorControlActivated">@color/colorAccent2</item>

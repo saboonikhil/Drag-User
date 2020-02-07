@@ -64,8 +64,8 @@ public class AccountFragment extends Fragment {
         helpView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HelpFragment help = new HelpFragment();
-                help.show(getChildFragmentManager(), "Help");
+                HelpFaqFragment helpFaq = new HelpFaqFragment();
+                helpFaq.show(getChildFragmentManager(), "Help & FAQ");
             }
         });
 
@@ -110,7 +110,7 @@ public class AccountFragment extends Fragment {
         contactView = rootView.findViewById(R.id.account_mobile_number);
         profileView = rootView.findViewById(R.id.account_profile);
         paymentView = rootView.findViewById(R.id.account_payment);
-        helpView = rootView.findViewById(R.id.account_help);
+        helpView = rootView.findViewById(R.id.account_help_faq);
         termsOfUsageView = rootView.findViewById(R.id.account_terms);
         logoutView = rootView.findViewById(R.id.account_logout);
     }

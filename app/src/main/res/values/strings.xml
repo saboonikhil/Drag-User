@@ -127,7 +127,7 @@
     <string name="pending_payable_amount">Pending Payable Amount</string>
 
     <!-- Strings related to Account -->
-    <string name="help">Help</string>
+    <string name="help_and_faq">Help &amp; FAQ</string>
     <string name="logout">Logout</string>
     <string name="terms_and_services">Terms &amp; Services</string>
     <string name="payment">Payment</string>
@@ -142,27 +142,32 @@
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
 
-    <!-- Strings related to Help -->
-    <string name="any_queries_whatsapp">Any Queries, Whatsapp Us</string>
-    <string name="your_feedback">Your Feedback</string>
+    <!-- Strings related to Help & FAQ -->
+    <string name="feedback_hint">Can you please help me with &#8230;</string>
     <string name="send">Send</string>
     <string name="call">Call</string>
     <string name="help_desk">+91 7010823612</string>
+    <string name="cancel">Cancel</string>
 
-    <!-- Strings related to Faqs -->
-    <string name="faqs_question_1">How much in advance can I book a ride?</string>
-    <string name="faqs_answer_1">Depending on your travel date/time, you can book a ride up to 30 days in advance. The driver details for your ride will be sent 6 hours prior to your pickup time.</string>
-    <string name="faqs_question_2">Additional fees &amp; charges applicable on the ride?</string>
-    <string name="faqs_answer_2">The total estimated cost for your trip indicates the fare for kilometres travelled, duration of the ride, driver allowance and taxes (as applicable).\n\n
-            Note - State taxes, Permits, Tolls or Parking Fee (if applicable) are included in your bill.</string>
-    <string name="faqs_question_3">How do I leave a rating?</string>
-    <string name="faqs_answer_3">You can leave a rating 24 hours after the ride from your Profile.\n\n
-            First time leaving a rating? Here are a couple of tips:\n
-            - Choose whether the person you’re rating was the driver or passenger.\n
-            - Select the adjective that best describes your experience.\n
-            - Add a few personal words about the person’s promptness or music taste.\n\n
-            If you want to share something that didn’t go well, just try and be as objective as possible. And, if it’s something you feel uncomfortable writing in a rating, you can always contact us.</string>
-    <string name="faqs_question_4">Can I edit or delete a rating that I’ve left?</string>
-    <string name="faqs_answer_4">You can’t edit or delete a rating that you’ve left. Your first impression of your experience travelling with a member is the most accurate. Not how you feel after seeing the rating this person left you.</string>
+    <string name="help_faq_question_1">When will I get driver and cab details for my trip?</string>
+    <string name="help_faq_answer_1">The driver and cab details will be shared before 2&#8211;5 hours from your trip pickup time. You can
+        view the same along with the other details by tapping on the specific trip.</string>
+    <string name="help_faq_question_2">How do I change my trip pickup time?</string>
+    <string name="help_faq_answer_2">There is no charges for altering pickup time by an hour or two. However,
+        we permit such changes only before 8 hours from the trip starting time. You can message us using the envelope button in the bottom right corner.</string>
+    <string name="help_faq_question_3">I wish to cancel my trip. What are the cancellation rules?</string>
+    <string name="help_faq_answer_3">Cab assigned for your trip might travel long way from a city other than your pickup city to reach you.
+        Due to which, we accept cancellation only before 8 hours from the pickup time. You can message us using the envelope button in the bottom right corner.
+        The following rules are applicable:\n\n
+        » If cancelled before 24 hours from the pickup time, 0% of the fare will be charged as cancellation fee\n
+        » If cancelled before 12 hours from the pickup time, 5% of the fare will be charged as cancellation fee\n
+        » If cancelled before 8 hours from the pickup time, 10% of the fare will be charged as cancellation fee
+    </string>
+    <string name="help_faq_question_4">I have paid an extra amount to the driver</string>
+    <string name="help_faq_answer_4">We encourage our partners to collect amount as shown to you while booking. In rare cases,
+        if such a situation arises we request you to describe the issue by writing us using the envelope button. We will ensure you get a refund within 24 hours.</string>
+    <string name="help_faq_question_5">Does my trip fare include parking charges?</string>
+    <string name="help_faq_answer_5">No, parking charges are excluded. The total estimated cost for your trip indicates the fare for kilometres travelled,
+        duration of the ride, driver allowance and taxes (as applicable)\n\nNote: State taxes, permits, tolls are included in your trip fare.</string>
 
 </resources>
