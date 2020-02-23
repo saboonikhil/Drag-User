@@ -8,9 +8,6 @@ import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -24,11 +21,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.drag.user.model.Location;
 import com.drag.user.model.User;
 import com.drag.user.network.APIUtils;
 import com.drag.user.network.EndPointInterface;
 import com.drag.user.util.ObjectSerializer;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import retrofit2.Call;

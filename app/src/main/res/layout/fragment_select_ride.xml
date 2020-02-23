@@ -157,14 +157,14 @@
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/select_ride_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/select_ride_note"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/select_ride_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -172,7 +172,7 @@
             android:scrollbars="vertical"
             android:scrollingCache="true" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/select_ride_empty_layout"
@@ -210,7 +210,7 @@
 
     </RelativeLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/select_ride_request"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
