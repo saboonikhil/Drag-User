@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initViews();
 
+        String view = getIntent().getStringExtra("view");
+        displaySelectedScreen(view);
+
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
         token = pref.getString("token", "");
         String json = pref.getString("dbObj", "");
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         bookRideView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displaySelectedScreen(R.id.main_book_ride);
+                displaySelectedScreen("Book Ride");
                 tripsButtonView.setColorFilter(getResources().getColor(R.color.warm_grey));
                 tripsTitleView.setTextColor(getResources().getColor(R.color.warm_grey));
                 accountButtonView.setColorFilter(getResources().getColor(R.color.warm_grey));
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         tripsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displaySelectedScreen(R.id.main_trips);
+                displaySelectedScreen("Trips");
                 tripsButtonView.setColorFilter(getResources().getColor(R.color.lightish_blue));
                 tripsTitleView.setTextColor(getResources().getColor(R.color.lightish_blue));
                 accountButtonView.setColorFilter(getResources().getColor(R.color.warm_grey));
@@ -80,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         accountView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displaySelectedScreen(R.id.main_account);
+                displaySelectedScreen("Account");
                 accountButtonView.setColorFilter(getResources().getColor(R.color.lightish_blue));
                 accountTitleView.setTextColor(getResources().getColor(R.color.lightish_blue));
                 tripsButtonView.setColorFilter(getResources().getColor(R.color.warm_grey));
@@ -89,7 +92,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getAuthLocations();
-        displaySelectedScreen(R.id.main_book_ride);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if (intent.getExtras() != null) {
+            String value = intent.getExtras().getString("view");
+            displaySelectedScreen(value != null ? value : "Book Ride");
+        }
     }
 
     private void getAuthLocations() {
@@ -131,21 +141,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void displaySelectedScreen(int itemId) {
+    public void displaySelectedScreen(String view) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        switch (itemId) {
-            case R.id.main_book_ride:
+        switch (view) {
+            case "Book Ride":
                 count = 0;
                 titleView.setText(R.string.app_name);
                 ft.replace(R.id.main_content_frame, new BookRideFragment(), "Book Ride").commit();
                 break;
 
-            case R.id.main_trips:
+            case "Trips":
                 titleView.setText(R.string.trips);
                 ft.replace(R.id.main_content_frame, new TripsFragment(), "Trips").commit();
                 break;
 
-            case R.id.main_account:
+            case "Account":
                 titleView.setText(R.string.account);
                 ft.replace(R.id.main_content_frame, new AccountFragment(), "Account").commit();
                 break;
@@ -162,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
             else if (count == 2)
                 finish();
         } else {
-            displaySelectedScreen(R.id.main_book_ride);
+            displaySelectedScreen("Book Ride");
         }
     }
 

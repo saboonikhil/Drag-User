@@ -101,7 +101,7 @@
 
                     <TextView
                         android:id="@+id/main_trips_title"
-                        style="@style/TextStyle11"
+                        style="@style/TextStyle6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/trips" />
@@ -135,7 +135,7 @@
 
                     <TextView
                         android:id="@+id/main_account_title"
-                        style="@style/TextStyle11"
+                        style="@style/TextStyle6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/account" />

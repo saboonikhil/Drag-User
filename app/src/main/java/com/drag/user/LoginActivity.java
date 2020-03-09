@@ -92,7 +92,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (isTokenValid()) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("view", "Book Ride");
+            startActivity(intent);
             finish();
         } else {
             initLocations();
@@ -169,7 +171,9 @@ public class LoginActivity extends AppCompatActivity {
                                 edit.putString("expires", response.body().token().expires());
                                 edit.putString("dbObj", new Gson().toJson(response.body().token().user()));
                                 edit.apply();
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra("view", "Book Ride");
+                                startActivity(intent);
                                 finish();
                             } else {
                                 Toast.makeText(getApplicationContext(), response.body().response(), Toast.LENGTH_LONG).show();
