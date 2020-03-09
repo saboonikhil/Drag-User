@@ -2,6 +2,8 @@
 
     <string name="app_name">Drag</string>
     <string name="cherish_the_journey">CHERISH THE JOURNEY</string>
+    <string name="go_back">Go back</string>
+    <string name="close">Close</string>
 
     <!-- Strings related to Login -->
     <string name="log_in">Log In</string>
@@ -50,7 +52,6 @@
     <string name="select_ride_note">Note: Fare will vary as seats get filled</string>
     <string name="swipe_up_to_see_more">Swipe up to see more</string>
     <string name="no_rides_available_now">No Rides Available Now !</string>
-    <string name="close">Close</string>
     <string name="select_ride_rules">\u00201. The selected ride will be active for 72 hours before its start time.\n\n
         2. You can\'t join another ride until this ride is confirmed.\n\n
         3. Fare will be divided according to the number of seats you select.\n\n
@@ -150,11 +151,11 @@
     <string name="cancel">Cancel</string>
 
     <string name="help_faq_question_1">When will I get driver and cab details for my trip?</string>
-    <string name="help_faq_answer_1">The driver and cab details will be shared before 2&#8211;5 hours from your trip pickup time. You can
+    <string name="help_faq_answer_1">The driver and cab details will be shared before 2&#8211;8 hours from your trip pickup time. You can
         view the same along with the other details by tapping on the specific trip.</string>
     <string name="help_faq_question_2">How do I change my trip pickup time?</string>
     <string name="help_faq_answer_2">There is no charges for altering pickup time by an hour or two. However,
-        we permit such changes only before 8 hours from the trip starting time. You can message us using the envelope button in the bottom right corner.</string>
+        we permit such changes only before 8 hours from the original trip starting time. You can message us using the envelope button in the bottom right corner.</string>
     <string name="help_faq_question_3">I wish to cancel my trip. What are the cancellation rules?</string>
     <string name="help_faq_answer_3">Cab assigned for your trip might travel long way from a city other than your pickup city to reach you.
         Due to which, we accept cancellation only before 8 hours from the pickup time. You can message us using the envelope button in the bottom right corner.

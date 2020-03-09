@@ -27,7 +27,7 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/TextStyle11"
+                style="@style/TextStyle6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/city" />
@@ -50,7 +50,7 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/TextStyle11"
+                style="@style/TextStyle6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pickup" />
@@ -73,7 +73,7 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/TextStyle11"
+                style="@style/TextStyle6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/drop" />
@@ -96,7 +96,7 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/TextStyle11"
+                style="@style/TextStyle6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/time" />
@@ -119,7 +119,7 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/TextStyle11"
+                style="@style/TextStyle6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/seats" />
@@ -142,7 +142,7 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/TextStyle11"
+                style="@style/TextStyle6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/your_name" />
@@ -165,7 +165,7 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/TextStyle11"
+                style="@style/TextStyle6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mobile_number" />

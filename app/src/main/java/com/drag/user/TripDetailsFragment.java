@@ -86,7 +86,7 @@ public class TripDetailsFragment extends DialogFragment {
             e.printStackTrace();
         }
 
-        if ((Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis()) > -18000000 &&
+        if ((Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis()) > -28800000 &&
                 (Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis()) < 86400000) {
 
             String driverName = trips[position].getDriverName();
