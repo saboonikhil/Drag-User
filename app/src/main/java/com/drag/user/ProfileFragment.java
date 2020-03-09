@@ -9,15 +9,17 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -49,7 +51,6 @@ public class ProfileFragment extends DialogFragment {
     private View rootView;
     private ViewGroup container;
     private ImageButton backView, editView, saveView;
-    private InputMethodManager imm;
     private SharedPreferences pref;
     private User user;
     private TextView nameView, emailView, contactView, alternateContactView, passwordView;
@@ -83,7 +84,6 @@ public class ProfileFragment extends DialogFragment {
 
         container = (ViewGroup) rootView.getParent();
         connMgr = (ConnectivityManager) parentActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        imm = (InputMethodManager) parentActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         pref = this.parentActivity.getSharedPreferences("AppPref", MODE_PRIVATE);
         String json = pref.getString("dbObj", "");
@@ -185,7 +185,7 @@ public class ProfileFragment extends DialogFragment {
                             }
                         }
                     });
-                    setFocus(editNameView);
+                    setKeyboardFocus(editNameView);
                 }
             });
 
@@ -238,7 +238,7 @@ public class ProfileFragment extends DialogFragment {
 
                         }
                     });
-                    setFocus(editEmailView);
+                    setKeyboardFocus(editEmailView);
                 }
             });
 
@@ -295,7 +295,7 @@ public class ProfileFragment extends DialogFragment {
                             }
                         }
                     });
-                    setFocus(editContactView);
+                    setKeyboardFocus(editContactView);
                 }
             });
 
@@ -304,7 +304,10 @@ public class ProfileFragment extends DialogFragment {
                 public void onClick(View view) {
                     View customView = getLayoutInflater().inflate(R.layout.layout_edit_profile_alternate_contact, container, false);
                     editAlternateContactView = customView.findViewById(R.id.edit_profile_alternate_number);
-                    editAlternateContactView.setText(alternateContactView.getText());
+
+                    if (alternateContactView.getText().length() == 0)
+                        editAlternateContactView.setText(countryCode);
+                    else editAlternateContactView.setText(alternateContactView.getText());
 
                     dialog = new AlertDialog.Builder(getContext())
                             .setTitle("Edit Alternate Number")
@@ -352,7 +355,7 @@ public class ProfileFragment extends DialogFragment {
                             }
                         }
                     });
-                    setFocus(editAlternateContactView);
+                    setKeyboardFocus(editAlternateContactView);
                 }
             });
 
@@ -436,7 +439,7 @@ public class ProfileFragment extends DialogFragment {
                             }
                         }
                     });
-                    setFocus(newPasswordView);
+                    setKeyboardFocus(newPasswordView);
                 }
             });
         } else {
@@ -509,7 +512,7 @@ public class ProfileFragment extends DialogFragment {
                     togglePositiveButton(true);
             }
         });
-        setFocus(promptPasswordView);
+        setKeyboardFocus(promptPasswordView);
     }
 
     private void saveProfile() {
@@ -589,19 +592,14 @@ public class ProfileFragment extends DialogFragment {
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(enable);
     }
 
-    private void setFocus(final EditText et) {
-        et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                et.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        imm.showSoftInput(et, InputMethodManager.SHOW_IMPLICIT);
-                    }
-                });
+    private void setKeyboardFocus(final EditText et) {
+        (new Handler()).postDelayed(new Runnable() {
+            public void run() {
+                et.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0, 0, 0));
+                et.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
+                et.setSelection(et.getText().length());
             }
-        });
-        et.requestFocus();
+        }, 100);
     }
 
     private boolean isConnectedToInternet() {
