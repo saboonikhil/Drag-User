@@ -1,7 +1,15 @@
 package com.drag.user;
 
+import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.drag.user.model.Cab;
 import com.drag.user.model.Paytm;
@@ -22,7 +31,12 @@ import com.paytm.pgsdk.PaytmOrder;
 import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,12 +49,15 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
     private User user;
     private Cab cabTypeSelected;
     private TextView messageView;
+    private NotificationManager notificationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         initViews();
+
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         SharedPreferences pref = getSharedPreferences("AppPref", MODE_PRIVATE);
         token = pref.getString("token", "");
@@ -78,8 +95,9 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
     }
 
     private void initializePaytmPayment(Paytm paytm) {
-        //PaytmPGService Service = PaytmPGService.getStagingService();
-        PaytmPGService Service = PaytmPGService.getProductionService();
+        PaytmPGService Service;
+        if (BuildConfig.DEBUG) Service = PaytmPGService.getStagingService();
+        else Service = PaytmPGService.getProductionService();
 
         orderId = paytm.getORDER_ID();
         HashMap<String, String> paramMap = new HashMap<>();
@@ -148,7 +166,7 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
             @Override
             public void onResponse(@NonNull Call<Cab> call, @NonNull Response<Cab> response) {
                 if (response.body() != null) {
-                    displayTransactionStatus(response.body().getRiders()[0].getTripStatus());
+                    displayTransactionStatus(response.body());
                 }
             }
 
@@ -162,15 +180,18 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
         });
     }
 
-    private void displayTransactionStatus(String status) {
-        switch (status) {
+    private void displayTransactionStatus(Cab cab) {
+        switch (cab.getRiders()[0].getTripStatus()) {
             case "Payment Successful":
             case "Trip Confirmed":
+                sendNotification(cab);
                 setContentView(R.layout.layout_payment_success);
                 ImageButton confirmBackView = findViewById(R.id.payment_success_back);
                 confirmBackView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
+                        intent.putExtra("view", "Trips");
                         finish();
                     }
                 });
@@ -181,6 +202,8 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
                 failedBackView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
+                        intent.putExtra("view", "Trips");
                         finish();
                     }
                 });
@@ -191,11 +214,63 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
                 pendingBackView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
+                        intent.putExtra("view", "Trips");
                         finish();
                     }
                 });
                 break;
         }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private void sendNotification(Cab cab) {
+        String startDate = "", startTime = "";
+        try {
+            Calendar calendar = Calendar.getInstance();
+            if (cab.getStartTime() != null) {
+                Date displayTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(cab.getStartTime());
+                calendar.setTime(displayTime);
+                calendar.add(Calendar.HOUR, 5);
+                calendar.add(Calendar.MINUTE, 30);
+                startTime = new SimpleDateFormat("h:mm a").format(calendar.getTime());
+                startDate = new SimpleDateFormat("MMM d").format(calendar.getTime());
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String message = "Trip ID " + cab.getRiders()[0].getTripId() + " confirmed from " + cab.getPickup()
+                + " to " + cab.getDrop() + " starting at " + startTime + " on " + startDate +
+                ".\n\nDriver and cab details will be shared before 2-8 hours from the pickup time. Cherish the Journey!";
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("view", "Trips");
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "default")
+                .setContentTitle("Your ride is booked!")
+                .setTicker("Your ride is booked!")
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_notification_small)
+                .setContentText(message);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("default", "Your ride is booked!", NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(message);
+            channel.setShowBadge(true);
+            channel.canShowBadge();
+            channel.enableLights(true);
+            channel.setLightColor(Color.RED);
+            channel.enableVibration(true);
+            channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500});
+            notificationManager.createNotificationChannel(channel);
+        }
+        int id = new Random().nextInt(9999 - 1000) + 1000;
+        notificationManager.notify(id, notificationBuilder.build());
     }
 
     @Override
