@@ -192,6 +192,7 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
                     public void onClick(View v) {
                         Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
                         intent.putExtra("view", "Trips");
+                        startActivity(intent);
                         finish();
                     }
                 });
@@ -204,6 +205,7 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
                     public void onClick(View v) {
                         Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
                         intent.putExtra("view", "Trips");
+                        startActivity(intent);
                         finish();
                     }
                 });
@@ -216,6 +218,7 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
                     public void onClick(View v) {
                         Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
                         intent.putExtra("view", "Trips");
+                        startActivity(intent);
                         finish();
                     }
                 });
@@ -240,7 +243,7 @@ public class PaymentActivity extends AppCompatActivity implements PaytmPaymentTr
             e.printStackTrace();
         }
 
-        String message = "Trip ID " + cab.getRiders()[0].getTripId() + " confirmed from " + cab.getPickup()
+        String message = "Booking ID " + cab.getRiders()[0].getTripId() + " confirmed from " + cab.getPickup()
                 + " to " + cab.getDrop() + " starting at " + startTime + " on " + startDate +
                 ".\n\nDriver and cab details will be shared before 2-8 hours from the pickup time. Cherish the Journey!";
 
