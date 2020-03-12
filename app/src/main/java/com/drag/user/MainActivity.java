@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton notificationsView, bookRideView, tripsButtonView, accountButtonView;
     private LinearLayout tripsView, accountView;
     private int count = 0;
+    private boolean switchToView = false;
+    private Bundle receivedIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +98,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onNewIntent(Intent intent) {
-        if (intent.getExtras() != null) {
-            String value = intent.getExtras().getString("view");
+        switchToView = true;
+        receivedIntent = intent.getExtras();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (switchToView) {
+            String value = receivedIntent.getString("view");
             displaySelectedScreen(value != null ? value : "Book Ride");
         }
     }
@@ -142,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displaySelectedScreen(String view) {
+        switchToView = false;
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         switch (view) {
             case "Book Ride":
@@ -174,11 +184,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             displaySelectedScreen("Book Ride");
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     private void initViews() {
