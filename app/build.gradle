@@ -12,11 +12,13 @@ android {
     }
     buildTypes {
         release {
+            // Replace with your Drag-API host before building release
             buildConfigField "String", "BASE_URL", "\"https://api.example.com\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
+            // Local / tunnel host for development
             buildConfigField "String", "BASE_URL", "\"https://localhost:8443\""
             debuggable true
             applicationIdSuffix '.debug'
